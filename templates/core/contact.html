@@ -1,0 +1,124 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Contact - SkillVerse AI{% endblock %}
+
+{% block content %}
+<section class="page-section">
+    <div class="page-bg">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+    </div>
+    <div class="page-container">
+        <div class="page-header">
+            <span class="section-tag">Contact Us</span>
+            <h1>Get in <span class="gradient-text">Touch</span></h1>
+            <p>Have questions? We'd love to hear from you. Our team is here to help.</p>
+        </div>
+
+        <div class="contact-grid">
+            <div class="contact-info">
+                <div class="contact-card" data-tilt>
+                    <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+                    <h3>Email Us</h3>
+                    <p>support@skillverse.ai</p>
+                    <span class="contact-note">We respond within 24 hours</span>
+                </div>
+                <div class="contact-card" data-tilt>
+                    <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+                    <h3>Location</h3>
+                    <p>San Francisco, CA</p>
+                    <span class="contact-note">Remote-first team</span>
+                </div>
+                <div class="contact-card" data-tilt>
+                    <div class="contact-icon"><i class="fas fa-clock"></i></div>
+                    <h3>Support Hours</h3>
+                    <p>Mon-Fri, 9am-6pm PST</p>
+                    <span class="contact-note">24/7 AI assistance available</span>
+                </div>
+                <div class="contact-card" data-tilt>
+                    <div class="contact-icon"><i class="fab fa-discord"></i></div>
+                    <h3>Community</h3>
+                    <p>Join our Discord server</p>
+                    <span class="contact-note">Connect with other students</span>
+                </div>
+            </div>
+
+            <div class="contact-form-wrapper" data-tilt>
+                <form class="contact-form" id="contactForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" placeholder="Your name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" placeholder="your@email.com" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">Subject</label>
+                        <select id="subject" name="subject" required>
+                            <option value="">Select a subject</option>
+                            <option value="general">General Inquiry</option>
+                            <option value="support">Technical Support</option>
+                            <option value="feedback">Feedback</option>
+                            <option value="partnership">Partnership</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" rows="5" placeholder="Tell us how we can help..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-lg btn-full">
+                        <i class="fas fa-paper-plane"></i> Send Message
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- FAQ Section -->
+        <div class="liquid-card" style="margin-top: 3rem; padding: 3rem;" data-tilt>
+            <h2 style="font-family: var(--font-primary); font-size: 2rem; margin-bottom: 2rem; text-align: center;">Frequently Asked <span class="gradient-text">Questions</span></h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem;">
+                <div style="padding: 1.5rem; background: rgba(0,0,0,0.02); border-radius: var(--radius-md);">
+                    <h4 style="font-weight: 700; margin-bottom: 0.5rem;">Is SkillVerse AI free?</h4>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem;">Yes! We offer a free tier with access to all basic features. Premium plans are available for advanced analytics.</p>
+                </div>
+                <div style="padding: 1.5rem; background: rgba(0,0,0,0.02); border-radius: var(--radius-md);">
+                    <h4 style="font-weight: 700; margin-bottom: 0.5rem;">How accurate is the ATS scoring?</h4>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem;">Our ATS scoring is based on real-world ATS systems used by top companies, with 95% accuracy.</p>
+                </div>
+                <div style="padding: 1.5rem; background: rgba(0,0,0,0.02); border-radius: var(--radius-md);">
+                    <h4 style="font-weight: 700; margin-bottom: 0.5rem;">Can I use SkillVerse AI on mobile?</h4>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem;">Yes! Our platform is fully responsive and works great on all devices.</p>
+                </div>
+                <div style="padding: 1.5rem; background: rgba(0,0,0,0.02); border-radius: var(--radius-md);">
+                    <h4 style="font-weight: 700; margin-bottom: 0.5rem;">How do I get started?</h4>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem;">Simply create a free account and upload your resume to get started!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+document.getElementById('contactForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const btn = e.target.querySelector('button[type="submit"]');
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+    btn.disabled = true;
+    setTimeout(() => {
+        btn.innerHTML = '<i class="fas fa-check"></i> Message Sent!';
+        btn.style.background = 'var(--success)';
+        setTimeout(() => {
+            btn.innerHTML = '<i class="fas fa-paper-plane"></i> Send Message';
+            btn.style.background = '';
+            btn.disabled = false;
+            e.target.reset();
+        }, 2000);
+    }, 1500);
+});
+</script>
+{% endblock %}

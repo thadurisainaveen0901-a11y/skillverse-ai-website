@@ -1,0 +1,32 @@
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path("", views.home, name="home"),
+    path("login/", views.login, name="login"),
+    path("register/", views.register, name="register"),
+    path("dashboard/", views.dashboard, name="dashboard"),
+    path("resume/", views.resume, name="resume"),
+    path("interview/", views.interview, name="interview"),
+    path("profile/", views.profile, name="profile"),
+    path("settings/", views.settings, name="settings"),
+    path("api-docs/", views.api_docs, name="api_docs"),
+    path("about/", views.about, name="about"),
+    path("features/", views.features, name="features"),
+    path("contact/", views.contact, name="contact"),
+    path("help-center/", views.help_center, name="help_center"),
+    path("privacy/", views.privacy, name="privacy"),
+    path("terms/", views.terms, name="terms"),
+    path("careers/", views.careers, name="careers"),
+    path("blog/", views.blog, name="blog"),
+    path("press/", views.press, name="press"),
+    path("job-tracker/", views.job_tracker, name="job_tracker"),
+    path("cover-letter/", views.cover_letter, name="cover_letter"),
+    path("linkedin-optimizer/", views.linkedin_optimizer, name="linkedin_optimizer"),
+    path("skill-challenges/", views.skill_challenges, name="skill_challenges"),
+    path("resume-templates/", views.resume_templates, name="resume_templates"),
+    path("salary-insights/", views.salary_insights, name="salary_insights"),
+    path("company-prep/", views.company_prep, name="company_prep"),
+    path("ai-mentor/", views.ai_mentor, name="ai_mentor"),
+    path("voice-interview/", views.voice_interview, name="voice_interview"),
+]

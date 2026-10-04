@@ -1,0 +1,157 @@
+{% extends 'core/base.html' %}
+
+{% block title %}LinkedIn Optimizer - SkillVerse AI{% endblock %}
+
+{% block content %}
+<section class="tool-section">
+    <div class="tool-bg">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+    </div>
+    <div class="tool-container">
+        <div class="tool-header">
+            <span class="section-tag">LinkedIn Optimizer</span>
+            <h1>Optimize Your <span class="gradient-text">LinkedIn Profile</span></h1>
+            <p>Get personalized suggestions to improve your LinkedIn visibility and recruiter appeal</p>
+        </div>
+
+        <div class="tool-grid">
+            <div class="upload-card" data-tilt>
+                <h3 style="font-family: var(--font-primary); margin-bottom: 1.5rem;"><i class="fas fa-user"></i> Your LinkedIn Info</h3>
+                <form id="linkedinForm">
+                    <div class="form-group">
+                        <label>Headline</label>
+                        <input type="text" id="liHeadline" placeholder="Software Engineer | Python | React">
+                    </div>
+                    <div class="form-group">
+                        <label>Summary</label>
+                        <textarea id="liSummary" rows="4" placeholder="Tell us about yourself..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Skills (comma separated)</label>
+                        <input type="text" id="liSkills" placeholder="Python, JavaScript, React, SQL">
+                    </div>
+                    <div class="form-group">
+                        <label>Experience</label>
+                        <textarea id="liExperience" rows="3" placeholder="Your work experience..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-lg btn-full">
+                        <i class="fas fa-chart-line"></i> Analyze Profile
+                    </button>
+                </form>
+            </div>
+
+            <div class="results-card" data-tilt>
+                <h3 style="font-family: var(--font-primary); margin-bottom: 1.5rem;"><i class="fas fa-chart-pie"></i> Profile Score</h3>
+                <div class="score-display">
+                    <div class="score-circle">
+                        <svg viewBox="0 0 120 120">
+                            <circle class="score-bg" cx="60" cy="60" r="54"/>
+                            <circle class="score-fill" cx="60" cy="60" r="54" id="liScoreCircle"/>
+                        </svg>
+                        <div class="score-text">
+                            <span class="score-number" id="liScore">0</span>
+                            <span class="score-label">Profile Score</span>
+                        </div>
+                    </div>
+                    <div class="score-details">
+                        <div class="score-item">
+                            <span class="score-item-label">Headline</span>
+                            <span class="score-item-value" id="headlineScore">0/20</span>
+                        </div>
+                        <div class="score-item">
+                            <span class="score-item-label">Summary</span>
+                            <span class="score-item-value" id="summaryScore">0/25</span>
+                        </div>
+                        <div class="score-item">
+                            <span class="score-item-label">Skills</span>
+                            <span class="score-item-value" id="skillsScore">0/25</span>
+                        </div>
+                        <div class="score-item">
+                            <span class="score-item-label">Experience</span>
+                            <span class="score-item-value" id="experienceScore">0/30</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="analysis-sections">
+                    <div class="analysis-section">
+                        <h4><i class="fas fa-check-circle"></i> Strengths</h4>
+                        <ul id="liStrengths"></ul>
+                    </div>
+                    <div class="analysis-section">
+                        <h4><i class="fas fa-lightbulb"></i> Suggestions</h4>
+                        <ul id="liSuggestions"></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+document.getElementById('linkedinForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const headline = document.getElementById('liHeadline').value.trim();
+    const summary = document.getElementById('liSummary').value.trim();
+    const skills = document.getElementById('liSkills').value.trim();
+    const experience = document.getElementById('liExperience').value.trim();
+
+    // Calculate scores
+    let headlineScore = 0;
+    if (headline) headlineScore = 10;
+    if (headline.length > 20) headlineScore += 5;
+    if (headline.includes('|') || headline.includes('-')) headlineScore += 5;
+
+    let summaryScore = 0;
+    if (summary) summaryScore = 10;
+    if (summary.length > 100) summaryScore += 10;
+    if (summary.length > 200) summaryScore += 5;
+
+    let skillsScore = 0;
+    const skillsList = skills ? skills.split(',').map(s => s.trim()) : [];
+    if (skillsList.length >= 3) skillsScore = 10;
+    if (skillsList.length >= 5) skillsScore += 10;
+    if (skillsList.length >= 8) skillsScore += 5;
+
+    let experienceScore = 0;
+    if (experience) experienceScore = 10;
+    if (experience.length > 100) experienceScore += 10;
+    if (experience.length > 200) experienceScore += 10;
+
+    const totalScore = headlineScore + summaryScore + skillsScore + experienceScore;
+
+    // Update UI
+    document.getElementById('liScore').textContent = totalScore;
+    document.getElementById('headlineScore').textContent = headlineScore + '/20';
+    document.getElementById('summaryScore').textContent = summaryScore + '/25';
+    document.getElementById('skillsScore').textContent = skillsScore + '/25';
+    document.getElementById('experienceScore').textContent = experienceScore + '/30';
+
+    const circumference = 2 * Math.PI * 54;
+    const offset = circumference - (totalScore / 100) * circumference;
+    document.getElementById('liScoreCircle').style.strokeDashoffset = offset;
+
+    // Strengths
+    const strengths = [];
+    if (headlineScore >= 15) strengths.push("Strong, keyword-rich headline");
+    if (summaryScore >= 20) strengths.push("Comprehensive professional summary");
+    if (skillsScore >= 20) skillsScore >= 20 ? strengths.push("Well-defined skills section") : null;
+    if (experienceScore >= 25) strengths.push("Detailed work experience");
+    if (strengths.length === 0) strengths.push("Profile started - keep building!");
+
+    document.getElementById('liStrengths').innerHTML = strengths.map(s => `<li><i class="fas fa-check"></i> ${s}</li>`).join('');
+
+    // Suggestions
+    const suggestions = [];
+    if (headlineScore < 15) suggestions.push("Add keywords and separators to your headline");
+    if (summaryScore < 20) suggestions.push("Expand your summary with achievements and metrics");
+    if (skillsScore < 20) suggestions.push("Add more relevant skills (aim for 8+)");
+    if (experienceScore < 25) suggestions.push("Add more detail to your experience descriptions");
+    if (suggestions.length === 0) suggestions.push("Excellent profile! Keep it updated.");
+
+    document.getElementById('liSuggestions').innerHTML = suggestions.map(s => `<li><i class="fas fa-arrow-right"></i> ${s}</li>`).join('');
+});
+</script>
+{% endblock %}

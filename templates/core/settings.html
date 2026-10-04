@@ -1,0 +1,157 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Settings - SkillVerse AI{% endblock %}
+
+{% block content %}
+<section class="page-section">
+    <div class="page-bg">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+    </div>
+    <div class="page-container">
+        <div class="page-header">
+            <span class="section-tag">Settings</span>
+            <h1>Account <span class="gradient-text">Settings</span></h1>
+            <p>Manage your account preferences, security, and notification settings</p>
+        </div>
+
+        <div class="settings-grid">
+            <div class="settings-nav">
+                <button class="settings-nav-item active" data-tab="profile"><i class="fas fa-user"></i> Profile</button>
+                <button class="settings-nav-item" data-tab="security"><i class="fas fa-shield-alt"></i> Security</button>
+                <button class="settings-nav-item" data-tab="notifications"><i class="fas fa-bell"></i> Notifications</button>
+                <button class="settings-nav-item" data-tab="preferences"><i class="fas fa-cog"></i> Preferences</button>
+                <button class="settings-nav-item" data-tab="billing"><i class="fas fa-credit-card"></i> Billing</button>
+            </div>
+
+            <div class="settings-content">
+                <div class="settings-tab active" id="profile">
+                    <h3>Profile Settings</h3>
+                    <form class="settings-form" id="profileSettingsForm">
+                        <div class="form-group"><label>Username</label><input type="text" value="student_user" disabled></div>
+                        <div class="form-group"><label>Email</label><input type="email" id="settingsEmail" value="student@example.com"></div>
+                        <div class="form-group"><label>Full Name</label><input type="text" id="settingsName" placeholder="Your full name"></div>
+                        <div class="form-group"><label>Phone</label><input type="tel" id="settingsPhone" placeholder="+1 (555) 000-0000"></div>
+                        <div class="form-group"><label>Bio</label><textarea rows="3" id="settingsBio" placeholder="Tell us about yourself..."></textarea></div>
+                        <div class="form-group"><label>Location</label><input type="text" id="settingsLocation" placeholder="City, Country"></div>
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                    </form>
+                </div>
+
+                <div class="settings-tab" id="security">
+                    <h3>Security Settings</h3>
+                    <form class="settings-form">
+                        <div class="form-group"><label>Current Password</label><input type="password" placeholder="Enter current password"></div>
+                        <div class="form-group"><label>New Password</label><input type="password" placeholder="Enter new password"></div>
+                        <div class="form-group"><label>Confirm New Password</label><input type="password" placeholder="Confirm new password"></div>
+                        <button type="submit" class="btn btn-primary">Update Password</button>
+                    </form>
+                    <div class="security-options">
+                        <h4>Two-Factor Authentication</h4>
+                        <div class="toggle-item">
+                            <span>Enable 2FA</span>
+                            <label class="toggle"><input type="checkbox"><span class="toggle-slider"></span></label>
+                        </div>
+                        <h4 style="margin-top: 1.5rem;">Login Notifications</h4>
+                        <div class="toggle-item">
+                            <span>Email me when I log in</span>
+                            <label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label>
+                        </div>
+                        <h4 style="margin-top: 1.5rem;">Active Sessions</h4>
+                        <div style="padding: 1rem; background: rgba(0,0,0,0.02); border-radius: var(--radius-md); margin-top: 0.5rem;">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <div>
+                                    <p style="font-weight: 600; font-size: 0.9rem;">Current Session</p>
+                                    <p style="font-size: 0.8rem; color: var(--text-tertiary);">Chrome on Windows</p>
+                                </div>
+                                <span style="color: var(--success); font-size: 0.85rem; font-weight: 600;">Active</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="settings-tab" id="notifications">
+                    <h3>Notification Preferences</h3>
+                    <div class="notification-options">
+                        <div class="toggle-item"><span>Email Notifications</span><label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label></div>
+                        <div class="toggle-item"><span>Interview Reminders</span><label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label></div>
+                        <div class="toggle-item"><span>Weekly Progress Report</span><label class="toggle"><input type="checkbox"><span class="toggle-slider"></span></label></div>
+                        <div class="toggle-item"><span>Product Updates</span><label class="toggle"><input type="checkbox"><span class="toggle-slider"></span></label></div>
+                        <div class="toggle-item"><span>Marketing Emails</span><label class="toggle"><input type="checkbox"><span class="toggle-slider"></span></label></div>
+                    </div>
+                </div>
+
+                <div class="settings-tab" id="preferences">
+                    <h3>Preferences</h3>
+                    <div class="preference-options">
+                        <div class="form-group"><label>Theme</label><select id="themePreference"><option value="light">Light</option><option value="dark">Dark</option><option value="auto">Auto</option></select></div>
+                        <div class="form-group"><label>Language</label><select><option value="en">English</option><option value="es">Spanish</option><option value="fr">French</option></select></div>
+                        <div class="form-group"><label>Timezone</label><select><option value="pst">Pacific Time</option><option value="est">Eastern Time</option><option value="utc">UTC</option></select></div>
+                        <div class="form-group"><label>Date Format</label><select><option value="mdy">MM/DD/YYYY</option><option value="dmy">DD/MM/YYYY</option><option value="ymd">YYYY-MM-DD</option></select></div>
+                    </div>
+                </div>
+
+                <div class="settings-tab" id="billing">
+                    <h3>Billing & Subscription</h3>
+                    <div style="padding: 1.5rem; background: rgba(0,0,0,0.02); border-radius: var(--radius-md); margin-bottom: 1.5rem;">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div>
+                                <h4 style="font-weight: 700;">Free Plan</h4>
+                                <p style="color: var(--text-secondary); font-size: 0.9rem;">Basic features included</p>
+                            </div>
+                            <span style="color: var(--success); font-weight: 700;">Active</span>
+                        </div>
+                    </div>
+                    <div style="padding: 1.5rem; background: rgba(91,95,239,0.05); border: 1px solid rgba(91,95,239,0.2); border-radius: var(--radius-md);">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div>
+                                <h4 style="font-weight: 700;">Premium Plan</h4>
+                                <p style="color: var(--text-secondary); font-size: 0.9rem;">$9.99/month - Unlimited access</p>
+                            </div>
+                            <button class="btn btn-primary btn-sm">Upgrade</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_scripts %}
+document.querySelectorAll('.settings-nav-item').forEach(item => {
+    item.addEventListener('click', () => {
+        document.querySelectorAll('.settings-nav-item').forEach(i => i.classList.remove('active'));
+        document.querySelectorAll('.settings-tab').forEach(t => t.classList.remove('active'));
+        item.classList.add('active');
+        document.getElementById(item.dataset.tab).classList.add('active');
+    });
+});
+
+// Save profile settings
+document.getElementById('profileSettingsForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const data = {
+        name: document.getElementById('settingsName').value,
+        email: document.getElementById('settingsEmail').value,
+        phone: document.getElementById('settingsPhone').value,
+        bio: document.getElementById('settingsBio').value,
+        location: document.getElementById('settingsLocation').value
+    };
+    localStorage.setItem('settingsData', JSON.stringify(data));
+    alert('Settings saved successfully!');
+});
+
+// Theme preference
+document.getElementById('themePreference').addEventListener('change', (e) => {
+    const theme = e.target.value;
+    if (theme === 'auto') {
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        document.documentElement.setAttribute('data-theme', prefersDark ? 'dark' : 'light');
+    } else {
+        document.documentElement.setAttribute('data-theme', theme);
+    }
+    localStorage.setItem('theme', theme);
+});
+</script>
+{% endblock %}

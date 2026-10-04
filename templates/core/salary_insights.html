@@ -1,0 +1,120 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Salary Insights - SkillVerse AI{% endblock %}
+
+{% block content %}
+<section class="page-section">
+    <div class="page-bg">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+    </div>
+    <div class="page-container">
+        <div class="page-header">
+            <span class="section-tag">Salary Insights</span>
+            <h1>Know Your <span class="gradient-text">Worth</span></h1>
+            <p>Explore salary ranges for different roles, locations, and experience levels</p>
+        </div>
+
+        <!-- Salary Stats -->
+        <div class="stats-grid" style="margin-bottom: 2rem;">
+            <div class="stat-card" data-tilt>
+                <div class="stat-icon"><i class="fas fa-dollar-sign"></i></div>
+                <div class="stat-info">
+                    <span class="stat-value">$85K</span>
+                    <span class="stat-label">Entry Level Avg</span>
+                </div>
+            </div>
+            <div class="stat-card" data-tilt>
+                <div class="stat-icon"><i class="fas fa-briefcase"></i></div>
+                <div class="stat-info">
+                    <span class="stat-value">$120K</span>
+                    <span class="stat-label">Mid Level Avg</span>
+                </div>
+            </div>
+            <div class="stat-card" data-tilt>
+                <div class="stat-icon"><i class="fas fa-chart-line"></i></div>
+                <div class="stat-info">
+                    <span class="stat-value">$180K</span>
+                    <span class="stat-label">Senior Level Avg</span>
+                </div>
+            </div>
+            <div class="stat-card" data-tilt>
+                <div class="stat-icon"><i class="fas fa-map-marker-alt"></i></div>
+                <div class="stat-info">
+                    <span class="stat-value">+25%</span>
+                    <span class="stat-label">Remote Premium</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Salary by Role -->
+        <div class="liquid-card" style="padding: 2.5rem; margin-bottom: 2rem;" data-tilt>
+            <h2 style="font-family: var(--font-primary); font-size: 1.75rem; margin-bottom: 1.5rem;">Salary by <span class="gradient-text">Role</span></h2>
+            <div style="display: flex; flex-direction: column; gap: 1rem;">
+                <div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                        <span style="font-weight: 600;">Python Developer</span>
+                        <span style="color: var(--primary); font-weight: 700;">$70K - $150K</span>
+                    </div>
+                    <div class="progress-bar" style="height: 8px;"><div class="progress-fill" style="width: 75%;"></div></div>
+                </div>
+                <div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                        <span style="font-weight: 600;">JavaScript Developer</span>
+                        <span style="color: var(--primary); font-weight: 700;">$65K - $140K</span>
+                    </div>
+                    <div class="progress-bar" style="height: 8px;"><div class="progress-fill" style="width: 70%;"></div></div>
+                </div>
+                <div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                        <span style="font-weight: 600;">Data Scientist</span>
+                        <span style="color: var(--primary); font-weight: 700;">$80K - $160K</span>
+                    </div>
+                    <div class="progress-bar" style="height: 8px;"><div class="progress-fill" style="width: 80%;"></div></div>
+                </div>
+                <div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                        <span style="font-weight: 600;">DevOps Engineer</span>
+                        <span style="color: var(--primary); font-weight: 700;">$75K - $155K</span>
+                    </div>
+                    <div class="progress-bar" style="height: 8px;"><div class="progress-fill" style="width: 78%;"></div></div>
+                </div>
+                <div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                        <span style="font-weight: 600;">Full Stack Developer</span>
+                        <span style="color: var(--primary); font-weight: 700;">$70K - $145K</span>
+                    </div>
+                    <div class="progress-bar" style="height: 8px;"><div class="progress-fill" style="width: 72%;"></div></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Salary by Location -->
+        <div class="liquid-card" style="padding: 2.5rem;" data-tilt>
+            <h2 style="font-family: var(--font-primary); font-size: 1.75rem; margin-bottom: 1.5rem;">Salary by <span class="gradient-text">Location</span></h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem;">
+                <div style="padding: 1.5rem; background: rgba(0,0,0,0.02); border-radius: var(--radius-md); text-align: center;">
+                    <h4 style="font-weight: 700; margin-bottom: 0.5rem;">San Francisco</h4>
+                    <p style="font-size: 1.5rem; font-weight: 800; color: var(--primary);">$130K</p>
+                    <p style="font-size: 0.85rem; color: var(--text-tertiary);">Average</p>
+                </div>
+                <div style="padding: 1.5rem; background: rgba(0,0,0,0.02); border-radius: var(--radius-md); text-align: center;">
+                    <h4 style="font-weight: 700; margin-bottom: 0.5rem;">New York</h4>
+                    <p style="font-size: 1.5rem; font-weight: 800; color: var(--primary);">$125K</p>
+                    <p style="font-size: 0.85rem; color: var(--text-tertiary);">Average</p>
+                </div>
+                <div style="padding: 1.5rem; background: rgba(0,0,0,0.02); border-radius: var(--radius-md); text-align: center;">
+                    <h4 style="font-weight: 700; margin-bottom: 0.5rem;">Seattle</h4>
+                    <p style="font-size: 1.5rem; font-weight: 800; color: var(--primary);">$120K</p>
+                    <p style="font-size: 0.85rem; color: var(--text-tertiary);">Average</p>
+                </div>
+                <div style="padding: 1.5rem; background: rgba(0,0,0,0.02); border-radius: var(--radius-md); text-align: center;">
+                    <h4 style="font-weight: 700; margin-bottom: 0.5rem;">Remote</h4>
+                    <p style="font-size: 1.5rem; font-weight: 800; color: var(--primary);">$110K</p>
+                    <p style="font-size: 0.85rem; color: var(--text-tertiary);">Average</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

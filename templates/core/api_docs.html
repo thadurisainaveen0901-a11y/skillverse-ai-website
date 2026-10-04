@@ -1,0 +1,239 @@
+{% extends 'core/base.html' %}
+
+{% block title %}API Documentation - SkillVerse AI{% endblock %}
+
+{% block content %}
+<section class="page-section">
+    <div class="page-bg">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+    </div>
+    <div class="page-container">
+        <div class="page-header">
+            <span class="section-tag">API Documentation</span>
+            <h1>REST API <span class="gradient-text">Reference</span></h1>
+            <p>Integrate SkillVerse AI into your applications with our comprehensive REST API</p>
+        </div>
+
+        <div class="api-docs">
+            <div class="api-sidebar">
+                <div class="api-nav">
+                    <h4>Authentication</h4>
+                    <a href="#auth-register" class="api-nav-link">Register</a>
+                    <a href="#auth-login" class="api-nav-link">Login</a>
+                    <a href="#auth-me" class="api-nav-link">Get Current User</a>
+                    <h4>Resume</h4>
+                    <a href="#resume-analyze" class="api-nav-link">Analyze Resume</a>
+                    <a href="#resume-roles" class="api-nav-link">Get Job Roles</a>
+                    <h4>Interview</h4>
+                    <a href="#interview-start" class="api-nav-link">Start Interview</a>
+                    <a href="#interview-evaluate" class="api-nav-link">Evaluate Answer</a>
+                    <a href="#interview-summary" class="api-nav-link">Get Summary</a>
+                    <a href="#interview-history" class="api-nav-link">Get History</a>
+                    <a href="#interview-stats" class="api-nav-link">Get Statistics</a>
+                </div>
+            </div>
+
+            <div class="api-content">
+                <div class="api-section" id="auth-register">
+                    <h3><span class="method post">POST</span> /api/auth/register</h3>
+                    <p>Register a new user account.</p>
+                    <div class="api-example">
+                        <h4>Request Body</h4>
+                        <pre><code>{
+  "username": "string",
+  "email": "string",
+  "password": "string"
+}</code></pre>
+                    </div>
+                    <div class="api-example">
+                        <h4>Response</h4>
+                        <pre><code>{
+  "message": "User registered successfully",
+  "user": {
+    "id": 1,
+    "username": "string",
+    "email": "string"
+  }
+}</code></pre>
+                    </div>
+                </div>
+
+                <div class="api-section" id="auth-login">
+                    <h3><span class="method post">POST</span> /api/auth/login</h3>
+                    <p>Authenticate and receive JWT tokens.</p>
+                    <div class="api-example">
+                        <h4>Request Body</h4>
+                        <pre><code>{
+  "username": "string",
+  "password": "string"
+}</code></pre>
+                    </div>
+                    <div class="api-example">
+                        <h4>Response</h4>
+                        <pre><code>{
+  "access": "jwt_access_token",
+  "refresh": "jwt_refresh_token",
+  "user": {
+    "id": 1,
+    "username": "string",
+    "email": "string"
+  }
+}</code></pre>
+                    </div>
+                </div>
+
+                <div class="api-section" id="auth-me">
+                    <h3><span class="method get">GET</span> /api/user/me</h3>
+                    <p>Get current authenticated user profile.</p>
+                    <div class="api-example">
+                        <h4>Headers</h4>
+                        <pre><code>Authorization: Bearer {access_token}</code></pre>
+                    </div>
+                    <div class="api-example">
+                        <h4>Response</h4>
+                        <pre><code>{
+  "id": 1,
+  "username": "string",
+  "email": "string",
+  "first_name": "string",
+  "last_name": "string",
+  "bio": "string",
+  "created_at": "2024-01-01T00:00:00Z"
+}</code></pre>
+                    </div>
+                </div>
+
+                <div class="api-section" id="resume-analyze">
+                    <h3><span class="method post">POST</span> /api/resume/analyze</h3>
+                    <p>Upload and analyze a resume file.</p>
+                    <div class="api-example">
+                        <h4>Request (multipart/form-data)</h4>
+                        <pre><code>resume: file (pdf, docx, txt)
+role: string (optional)</code></pre>
+                    </div>
+                    <div class="api-example">
+                        <h4>Response</h4>
+                        <pre><code>{
+  "ats_score": 87,
+  "keywords_matched": ["python", "django"],
+  "keywords_total": 15,
+  "skills_found": 8,
+  "word_count": 450,
+  "strengths": ["Strong technical skills"],
+  "suggestions": ["Add more quantifiable achievements"],
+  "missing_keywords": ["aws", "docker"]
+}</code></pre>
+                    </div>
+                </div>
+
+                <div class="api-section" id="resume-roles">
+                    <h3><span class="method get">GET</span> /api/resume/roles</h3>
+                    <p>Get available job role definitions.</p>
+                    <div class="api-example">
+                        <h4>Response</h4>
+                        <pre><code>[
+  {
+    "id": "python_developer",
+    "name": "Python Developer",
+    "keywords": ["python", "django", "flask"]
+  }
+]</code></pre>
+                    </div>
+                </div>
+
+                <div class="api-section" id="interview-start">
+                    <h3><span class="method get">GET</span> /api/interview/start</h3>
+                    <p>Start a new interview session.</p>
+                    <div class="api-example">
+                        <h4>Query Parameters</h4>
+                        <pre><code>role: string (required)</code></pre>
+                    </div>
+                    <div class="api-example">
+                        <h4>Response</h4>
+                        <pre><code>{
+  "session_id": "uuid",
+  "questions": ["question1", "question2"],
+  "role": "python_developer"
+}</code></pre>
+                    </div>
+                </div>
+
+                <div class="api-section" id="interview-evaluate">
+                    <h3><span class="method post">POST</span> /api/interview/evaluate</h3>
+                    <p>Submit an answer for evaluation.</p>
+                    <div class="api-example">
+                        <h4>Request Body</h4>
+                        <pre><code>{
+  "session_id": "uuid",
+  "question_id": 1,
+  "answer": "string"
+}</code></pre>
+                    </div>
+                    <div class="api-example">
+                        <h4>Response</h4>
+                        <pre><code>{
+  "score": 8,
+  "feedback": "string",
+  "strengths": ["string"],
+  "improvements": ["string"]
+}</code></pre>
+                    </div>
+                </div>
+
+                <div class="api-section" id="interview-summary">
+                    <h3><span class="method post">POST</span> /api/interview/summary</h3>
+                    <p>Get interview session summary.</p>
+                    <div class="api-example">
+                        <h4>Request Body</h4>
+                        <pre><code>{
+  "session_id": "uuid"
+}</code></pre>
+                    </div>
+                    <div class="api-example">
+                        <h4>Response</h4>
+                        <pre><code>{
+  "total_questions": 5,
+  "average_score": 7.5,
+  "highest_score": 9,
+  "lowest_score": 6,
+  "overall_feedback": "string"
+}</code></pre>
+                    </div>
+                </div>
+
+                <div class="api-section" id="interview-history">
+                    <h3><span class="method get">GET</span> /api/interview/history</h3>
+                    <p>Get user's interview history.</p>
+                    <div class="api-example">
+                        <h4>Response</h4>
+                        <pre><code>[
+  {
+    "id": 1,
+    "role": "python_developer",
+    "score": 8,
+    "created_at": "2024-01-01T00:00:00Z"
+  }
+]</code></pre>
+                    </div>
+                </div>
+
+                <div class="api-section" id="interview-stats">
+                    <h3><span class="method get">GET</span> /api/interview/stats</h3>
+                    <p>Get user's interview statistics.</p>
+                    <div class="api-example">
+                        <h4>Response</h4>
+                        <pre><code>{
+  "total_interviews": 12,
+  "average_score": 7.5,
+  "highest_score": 9,
+  "lowest_score": 5,
+  "improvement_rate": 15.5
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

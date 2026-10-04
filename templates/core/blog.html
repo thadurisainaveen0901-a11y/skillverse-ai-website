@@ -1,0 +1,120 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Blog - SkillVerse AI{% endblock %}
+
+{% block content %}
+<section class="page-section">
+    <div class="page-bg">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+    </div>
+    <div class="page-container">
+        <div class="page-header">
+            <span class="section-tag">Blog</span>
+            <h1>Latest <span class="gradient-text">Insights</span></h1>
+            <p>Tips, guides, and updates to help you land your dream job</p>
+        </div>
+
+        <!-- Featured Post -->
+        <div class="liquid-card" style="margin-bottom: 3rem; overflow: hidden;" data-tilt>
+            <div style="height: 300px; background: var(--gradient-1); display: flex; align-items: center; justify-content: center; color: white;">
+                <div style="text-align: center;">
+                    <i class="fas fa-file-alt" style="font-size: 4rem; margin-bottom: 1rem; opacity: 0.8;"></i>
+                    <h2 style="font-family: var(--font-primary); font-size: 2rem;">Featured Article</h2>
+                </div>
+            </div>
+            <div style="padding: 2rem;">
+                <span class="section-tag">Career Tips</span>
+                <h2 style="font-family: var(--font-primary); font-size: 1.75rem; margin: 1rem 0;">10 Resume Mistakes That Are Costing You Interviews</h2>
+                <p style="color: var(--text-secondary); margin-bottom: 1rem;">Learn the most common resume mistakes students make and how to fix them to land more interviews.</p>
+                <div style="display: flex; align-items: center; gap: 1rem; color: var(--text-tertiary); font-size: 0.9rem;">
+                    <span><i class="fas fa-calendar"></i> Oct 1, 2024</span>
+                    <span><i class="fas fa-clock"></i> 5 min read</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Blog Grid -->
+        <div class="features-grid">
+            <div class="liquid-card" data-tilt style="overflow: hidden;">
+                <div style="height: 180px; background: var(--gradient-2); display: flex; align-items: center; justify-content: center; color: white;">
+                    <i class="fas fa-code" style="font-size: 3rem; opacity: 0.8;"></i>
+                </div>
+                <div style="padding: 1.5rem;">
+                    <span class="section-tag" style="font-size: 0.7rem;">Interview Tips</span>
+                    <h3 style="font-family: var(--font-primary); font-size: 1.1rem; margin: 0.75rem 0;">How to Ace Your Technical Interview</h3>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1rem;">Master the art of technical interviews with these proven strategies.</p>
+                    <div style="color: var(--text-tertiary); font-size: 0.85rem;">
+                        <span><i class="fas fa-calendar"></i> Sep 28, 2024</span>
+                    </div>
+                </div>
+            </div>
+            <div class="liquid-card" data-tilt style="overflow: hidden;">
+                <div style="height: 180px; background: var(--gradient-4); display: flex; align-items: center; justify-content: center; color: white;">
+                    <i class="fas fa-chart-line" style="font-size: 3rem; opacity: 0.8;"></i>
+                </div>
+                <div style="padding: 1.5rem;">
+                    <span class="section-tag" style="font-size: 0.7rem;">ATS Tips</span>
+                    <h3 style="font-family: var(--font-primary); font-size: 1.1rem; margin: 0.75rem 0;">Understanding ATS Systems</h3>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1rem;">Learn how ATS systems work and how to optimize your resume.</p>
+                    <div style="color: var(--text-tertiary); font-size: 0.85rem;">
+                        <span><i class="fas fa-calendar"></i> Sep 25, 2024</span>
+                    </div>
+                </div>
+            </div>
+            <div class="liquid-card" data-tilt style="overflow: hidden;">
+                <div style="height: 180px; background: var(--gradient-3); display: flex; align-items: center; justify-content: center; color: white;">
+                    <i class="fas fa-briefcase" style="font-size: 3rem; opacity: 0.8;"></i>
+                </div>
+                <div style="padding: 1.5rem;">
+                    <span class="section-tag" style="font-size: 0.7rem;">Job Search</span>
+                    <h3 style="font-family: var(--font-primary); font-size: 1.1rem; margin: 0.75rem 0;">Top 5 Companies Hiring in 2024</h3>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1rem;">Discover the top companies actively hiring and what they look for.</p>
+                    <div style="color: var(--text-tertiary); font-size: 0.85rem;">
+                        <span><i class="fas fa-calendar"></i> Sep 22, 2024</span>
+                    </div>
+                </div>
+            </div>
+            <div class="liquid-card" data-tilt style="overflow: hidden;">
+                <div style="height: 180px; background: var(--gradient-5); display: flex; align-items: center; justify-content: center; color: white;">
+                    <i class="fas fa-brain" style="font-size: 3rem; opacity: 0.8;"></i>
+                </div>
+                <div style="padding: 1.5rem;">
+                    <span class="section-tag" style="font-size: 0.7rem;">AI & Career</span>
+                    <h3 style="font-family: var(--font-primary); font-size: 1.1rem; margin: 0.75rem 0;">How AI is Changing Hiring</h3>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1rem;">Explore how AI is transforming the recruitment process.</p>
+                    <div style="color: var(--text-tertiary); font-size: 0.85rem;">
+                        <span><i class="fas fa-calendar"></i> Sep 20, 2024</span>
+                    </div>
+                </div>
+            </div>
+            <div class="liquid-card" data-tilt style="overflow: hidden;">
+                <div style="height: 180px; background: var(--gradient-6); display: flex; align-items: center; justify-content: center; color: white;">
+                    <i class="fas fa-project-diagram" style="font-size: 3rem; opacity: 0.8;"></i>
+                </div>
+                <div style="padding: 1.5rem;">
+                    <span class="section-tag" style="font-size: 0.7rem;">Projects</span>
+                    <h3 style="font-family: var(--font-primary); font-size: 1.1rem; margin: 0.75rem 0;">5 Projects That Will Get You Hired</h3>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1rem;">Build these projects to stand out from other candidates.</p>
+                    <div style="color: var(--text-tertiary); font-size: 0.85rem;">
+                        <span><i class="fas fa-calendar"></i> Sep 18, 2024</span>
+                    </div>
+                </div>
+            </div>
+            <div class="liquid-card" data-tilt style="overflow: hidden;">
+                <div style="height: 180px; background: var(--gradient-7); display: flex; align-items: center; justify-content: center; color: white;">
+                    <i class="fas fa-graduation-cap" style="font-size: 3rem; opacity: 0.8;"></i>
+                </div>
+                <div style="padding: 1.5rem;">
+                    <span class="section-tag" style="font-size: 0.7rem;">Skills</span>
+                    <h3 style="font-family: var(--font-primary); font-size: 1.1rem; margin: 0.75rem 0;">Top 10 Skills Employers Want</h3>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1rem;">Develop these skills to increase your employability.</p>
+                    <div style="color: var(--text-tertiary); font-size: 0.85rem;">
+                        <span><i class="fas fa-calendar"></i> Sep 15, 2024</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

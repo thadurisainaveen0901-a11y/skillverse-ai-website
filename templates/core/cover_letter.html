@@ -1,0 +1,97 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Cover Letter Generator - SkillVerse AI{% endblock %}
+
+{% block content %}
+<section class="tool-section">
+    <div class="tool-bg">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+    </div>
+    <div class="tool-container">
+        <div class="tool-header">
+            <span class="section-tag">Cover Letter Generator</span>
+            <h1>Generate Your <span class="gradient-text">Cover Letter</span></h1>
+            <p>Create a professional cover letter tailored to your target role</p>
+        </div>
+
+        <div class="tool-grid">
+            <div class="upload-card" data-tilt>
+                <h3 style="font-family: var(--font-primary); margin-bottom: 1.5rem;"><i class="fas fa-edit"></i> Your Details</h3>
+                <form id="coverLetterForm">
+                    <div class="form-group">
+                        <label>Full Name</label>
+                        <input type="text" id="clName" placeholder="John Doe" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Position</label>
+                        <input type="text" id="clPosition" placeholder="Software Engineer" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Company</label>
+                        <input type="text" id="clCompany" placeholder="Google" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Key Skills (comma separated)</label>
+                        <input type="text" id="clSkills" placeholder="Python, React, SQL, Git">
+                    </div>
+                    <div class="form-group">
+                        <label>Experience</label>
+                        <textarea id="clExperience" rows="3" placeholder="2 years of software development experience..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-lg btn-full">
+                        <i class="fas fa-magic"></i> Generate Cover Letter
+                    </button>
+                </form>
+            </div>
+
+            <div class="results-card" id="coverLetterResult" data-tilt>
+                <div class="results-header">
+                    <h3><i class="fas fa-file-alt"></i> Generated Cover Letter</h3>
+                    <button class="btn btn-sm btn-outline" onclick="copyCoverLetter()">
+                        <i class="fas fa-copy"></i> Copy
+                    </button>
+                </div>
+                <div id="coverLetterContent" style="background: rgba(0,0,0,0.02); padding: 2rem; border-radius: var(--radius-md); line-height: 1.8; color: var(--text-secondary);">
+                    <p style="text-align: center; color: var(--text-tertiary);">Fill in your details and click Generate to create your cover letter.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+document.getElementById('coverLetterForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const name = document.getElementById('clName').value;
+    const position = document.getElementById('clPosition').value;
+    const company = document.getElementById('clCompany').value;
+    const skills = document.getElementById('clSkills').value;
+    const experience = document.getElementById('clExperience').value;
+
+    const coverLetter = `
+Dear Hiring Manager,
+
+I am writing to express my strong interest in the ${position} position at ${company}. With my background in ${skills || 'software development'} and ${experience || 'relevant experience'}, I am confident that I would be a valuable addition to your team.
+
+Throughout my career, I have developed a strong foundation in ${skills || 'my field'} and have consistently delivered high-quality results. I am particularly drawn to ${company} because of its reputation for innovation and excellence.
+
+I am excited about the opportunity to contribute to your team and would welcome the chance to discuss how my skills and experience align with your needs.
+
+Thank you for your time and consideration. I look forward to hearing from you.
+
+Sincerely,
+${name}
+    `.trim();
+
+    document.getElementById('coverLetterContent').innerHTML = coverLetter.replace(/\n/g, '<br>');
+});
+
+function copyCoverLetter() {
+    const content = document.getElementById('coverLetterContent').innerText;
+    navigator.clipboard.writeText(content).then(() => alert('Cover letter copied to clipboard!'));
+}
+</script>
+{% endblock %}

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>{% block title %}SkillVerse AI{% endblock %}</title>
+    <meta name="description" content="SkillVerse AI - AI-powered career preparation platform with resume analysis, interview practice, and job matching.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script>
+        (function() {
+            const savedTheme = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const theme = savedTheme || (prefersDark ? 'dark' : 'light');
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+    <canvas id="particle-canvas"></canvas>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/" class="logo">
+                <div class="logo-icon"><i class="fas fa-brain"></i></div>
+                <span class="logo-text">SkillVerse<span class="logo-accent">AI</span></span>
+            </a>
+            <div class="nav-links">
+                <a href="/" class="nav-link {% if request.path == '/' %}active{% endif %}">Home</a>
+                <a href="/features/" class="nav-link {% if request.path == '/features/' %}active{% endif %}">Features</a>
+                <a href="/dashboard/" class="nav-link {% if request.path == '/dashboard/' %}active{% endif %}">Dashboard</a>
+                <a href="/resume/" class="nav-link {% if request.path == '/resume/' %}active{% endif %}">Resume</a>
+                <a href="/interview/" class="nav-link {% if request.path == '/interview/' %}active{% endif %}">Interview</a>
+                <a href="/job-tracker/" class="nav-link {% if request.path == '/job-tracker/' %}active{% endif %}">Jobs</a>
+                <a href="/profile/" class="nav-link {% if request.path == '/profile/' %}active{% endif %}">Profile</a>
+                <a href="/about/" class="nav-link {% if request.path == '/about/' %}active{% endif %}">About</a>
+                <a href="/contact/" class="nav-link {% if request.path == '/contact/' %}active{% endif %}">Contact</a>
+            </div>
+            <div class="nav-actions">
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <a href="/login/" class="btn btn-outline">Sign In</a>
+                <a href="/register/" class="btn btn-primary">Get Started</a>
+            </div>
+            <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle navigation" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="/" class="logo">
+                        <div class="logo-icon"><i class="fas fa-brain"></i></div>
+                        <span class="logo-text">SkillVerse<span class="logo-accent">AI</span></span>
+                    </a>
+                    <p class="footer-desc">Build skills. Practice interviews. Improve your resume. Become job-ready with AI-powered career preparation.</p>
+                    <div class="social-links">
+                        <a href="https://twitter.com/skillverseai" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="https://linkedin.com/company/skillverseai" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        <a href="https://github.com/skillverseai" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                        <a href="https://discord.gg/skillverseai" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Discord"><i class="fab fa-discord"></i></a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h4>Product</h4>
+                    <a href="/resume/">Resume Analyzer</a>
+                    <a href="/interview/">Interview Prep</a>
+                    <a href="/dashboard/">Dashboard</a>
+                    <a href="/features/">Features</a>
+                    <a href="/job-tracker/">Job Tracker</a>
+                    <a href="/cover-letter/">Cover Letter</a>
+                    <a href="/linkedin-optimizer/">LinkedIn Optimizer</a>
+                    <a href="/salary-insights/">Salary Insights</a>
+                    <a href="/skill-challenges/">Skill Challenges</a>
+                    <a href="/resume-templates/">Resume Templates</a>
+                    <a href="/company-prep/">Company Prep</a>
+                    <a href="/ai-mentor/">AI Mentor</a>
+                    <a href="/voice-interview/">Voice Interview</a>
+                </div>
+                <div class="footer-links">
+                    <h4>Company</h4>
+                    <a href="/about/">About</a>
+                    <a href="/contact/">Contact</a>
+                    <a href="/careers/">Careers</a>
+                    <a href="/blog/">Blog</a>
+                    <a href="/press/">Press</a>
+                </div>
+                <div class="footer-links">
+                    <h4>Support</h4>
+                    <a href="/help-center/">Help Center</a>
+                    <a href="/settings/">Settings</a>
+                    <a href="/profile/">Profile</a>
+                    <a href="/privacy/">Privacy</a>
+                    <a href="/terms/">Terms</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 SkillVerse AI. All rights reserved. Built with precision and care.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+    <script>
+    // Dropdown menu toggle
+    const moreMenuToggle = document.getElementById('moreMenuToggle');
+    const moreMenu = document.getElementById('moreMenu');
+    if (moreMenuToggle && moreMenu) {
+        moreMenuToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            moreMenu.classList.toggle('active');
+        });
+        document.addEventListener('click', (e) => {
+            if (!moreMenu.contains(e.target) && e.target !== moreMenuToggle) {
+                moreMenu.classList.remove('active');
+            }
+        });
+    }
+    </script>
+    {% block extra_scripts %}{% endblock %}
+</body>
+</html>

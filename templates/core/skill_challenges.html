@@ -1,0 +1,173 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Skill Challenges - SkillVerse AI{% endblock %}
+
+{% block content %}
+<section class="page-section">
+    <div class="page-bg">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+    </div>
+    <div class="page-container">
+        <div class="page-header">
+            <span class="section-tag">Daily Challenges</span>
+            <h1>Skill <span class="gradient-text">Challenges</span></h1>
+            <p>Build your skills with daily coding challenges and track your streak</p>
+        </div>
+
+        <!-- Streak Card -->
+        <div class="liquid-card" style="padding: 2rem; margin-bottom: 2rem; text-align: center;" data-tilt>
+            <div style="display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap;">
+                <div>
+                    <div style="font-size: 3rem; font-weight: 800; color: var(--primary);" id="currentStreak">0</div>
+                    <div style="color: var(--text-tertiary); font-size: 0.9rem;">Current Streak</div>
+                </div>
+                <div>
+                    <div style="font-size: 3rem; font-weight: 800; color: var(--secondary);" id="longestStreak">0</div>
+                    <div style="color: var(--text-tertiary); font-size: 0.9rem;">Longest Streak</div>
+                </div>
+                <div>
+                    <div style="font-size: 3rem; font-weight: 800; color: var(--success);" id="totalChallenges">0</div>
+                    <div style="color: var(--text-tertiary); font-size: 0.9rem;">Challenges Completed</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Challenge Categories -->
+        <div class="features-grid" style="margin-bottom: 2rem;">
+            <div class="feature-card" data-tilt>
+                <div class="feature-icon"><i class="fas fa-code"></i></div>
+                <h3 class="feature-title">DSA Challenges</h3>
+                <p class="feature-desc">Data structures and algorithms problems</p>
+                <ul class="feature-list">
+                    <li><i class="fas fa-check"></i> Arrays & Strings</li>
+                    <li><i class="fas fa-check"></i> Trees & Graphs</li>
+                    <li><i class="fas fa-check"></i> Dynamic Programming</li>
+                </ul>
+            </div>
+            <div class="feature-card" data-tilt>
+                <div class="feature-icon"><i class="fas fa-laptop-code"></i></div>
+                <h3 class="feature-title">Web Development</h3>
+                <p class="feature-desc">Frontend and backend coding tasks</p>
+                <ul class="feature-list">
+                    <li><i class="fas fa-check"></i> HTML/CSS/JS</li>
+                    <li><i class="fas fa-check"></i> React & Node.js</li>
+                    <li><i class="fas fa-check"></i> API Integration</li>
+                </ul>
+            </div>
+            <div class="feature-card" data-tilt>
+                <div class="feature-icon"><i class="fas fa-database"></i></div>
+                <h3 class="feature-title">Database Design</h3>
+                <p class="feature-desc">SQL and NoSQL challenges</p>
+                <ul class="feature-list">
+                    <li><i class="fas fa-check"></i> Schema Design</li>
+                    <li><i class="fas fa-check"></i> Query Optimization</li>
+                    <li><i class="fas fa-check"></i> Data Modeling</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Daily Challenge -->
+        <div class="liquid-card" style="padding: 2.5rem;" data-tilt>
+            <h2 style="font-family: var(--font-primary); font-size: 1.75rem; margin-bottom: 1rem;">Today's Challenge</h2>
+            <div id="dailyChallenge" style="background: rgba(0,0,0,0.02); padding: 1.5rem; border-radius: var(--radius-md); margin-bottom: 1.5rem;">
+                <h3 style="font-weight: 700; margin-bottom: 0.5rem;">Two Sum Problem</h3>
+                <p style="color: var(--text-secondary); margin-bottom: 1rem;">Given an array of integers, return indices of the two numbers that add up to a specific target.</p>
+                <div style="background: rgba(0,0,0,0.03); padding: 1rem; border-radius: var(--radius-sm); font-family: monospace; font-size: 0.9rem;">
+                    Input: nums = [2, 7, 11, 15], target = 9<br>
+                    Output: [0, 1]<br>
+                    Explanation: nums[0] + nums[1] = 2 + 7 = 9
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Your Solution (Python)</label>
+                <textarea id="challengeCode" rows="6" placeholder="def twoSum(nums, target):&#10;    # Your code here&#10;    pass" style="font-family: monospace;"></textarea>
+            </div>
+            <div style="display: flex; gap: 1rem;">
+                <button class="btn btn-primary" onclick="submitChallenge()">
+                    <i class="fas fa-paper-plane"></i> Submit Solution
+                </button>
+                <button class="btn btn-outline" onclick="showHint()">
+                    <i class="fas fa-lightbulb"></i> Show Hint
+                </button>
+            </div>
+            <div id="challengeFeedback" style="display:none; margin-top: 1.5rem; padding: 1rem; background: rgba(52,199,89,0.1); border-radius: var(--radius-md);">
+                <p style="color: var(--success); font-weight: 600;"><i class="fas fa-check-circle"></i> Challenge Completed!</p>
+                <p style="color: var(--text-secondary); margin-top: 0.5rem;">Great job! Your streak has been updated.</p>
+            </div>
+        </div>
+
+        <!-- Leaderboard -->
+        <div class="liquid-card" style="margin-top: 2rem; padding: 2rem;" data-tilt>
+            <h2 style="font-family: var(--font-primary); font-size: 1.5rem; margin-bottom: 1.5rem;">Leaderboard</h2>
+            <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                <div style="display: flex; align-items: center; gap: 1rem; padding: 1rem; background: rgba(0,0,0,0.02); border-radius: var(--radius-md);">
+                    <span style="font-size: 1.5rem; font-weight: 800; color: var(--warning);">1</span>
+                    <div style="flex: 1;">
+                        <p style="font-weight: 600;">Sarah Johnson</p>
+                        <p style="font-size: 0.85rem; color: var(--text-tertiary);">45 challenges • 30 day streak</p>
+                    </div>
+                    <span style="font-weight: 700; color: var(--primary);">4,500 pts</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 1rem; padding: 1rem; background: rgba(0,0,0,0.02); border-radius: var(--radius-md);">
+                    <span style="font-size: 1.5rem; font-weight: 800; color: var(--text-tertiary);">2</span>
+                    <div style="flex: 1;">
+                        <p style="font-weight: 600;">Michael Chen</p>
+                        <p style="font-size: 0.85rem; color: var(--text-tertiary);">38 challenges • 25 day streak</p>
+                    </div>
+                    <span style="font-weight: 700; color: var(--primary);">3,800 pts</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 1rem; padding: 1rem; background: rgba(0,0,0,0.02); border-radius: var(--radius-md);">
+                    <span style="font-size: 1.5rem; font-weight: 800; color: var(--accent);">3</span>
+                    <div style="flex: 1;">
+                        <p style="font-weight: 600;">Emily Rodriguez</p>
+                        <p style="font-size: 0.85rem; color: var(--text-tertiary);">32 challenges • 20 day streak</p>
+                    </div>
+                    <span style="font-weight: 700; color: var(--primary);">3,200 pts</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+let challengeData = JSON.parse(localStorage.getItem('challengeData') || '{"streak":0,"longest":0,"total":0,"lastDate":""}');
+
+function updateStreak() {
+    const today = new Date().toDateString();
+    if (challengeData.lastDate !== today) {
+        const yesterday = new Date();
+        yesterday.setDate(yesterday.getDate() - 1);
+        if (challengeData.lastDate === yesterday.toDateString()) {
+            challengeData.streak++;
+        } else {
+            challengeData.streak = 1;
+        }
+        challengeData.lastDate = today;
+        challengeData.total++;
+        if (challengeData.streak > challengeData.longest) {
+            challengeData.longest = challengeData.streak;
+        }
+        localStorage.setItem('challengeData', JSON.stringify(challengeData));
+    }
+    document.getElementById('currentStreak').textContent = challengeData.streak;
+    document.getElementById('longestStreak').textContent = challengeData.longest;
+    document.getElementById('totalChallenges').textContent = challengeData.total;
+}
+
+function submitChallenge() {
+    const code = document.getElementById('challengeCode').value.trim();
+    if (!code) return;
+    updateStreak();
+    document.getElementById('challengeFeedback').style.display = 'block';
+}
+
+function showHint() {
+    alert('Hint: Use a hash map to store numbers you\'ve seen. For each number, check if (target - number) exists in the map.');
+}
+
+updateStreak();
+</script>
+{% endblock %}

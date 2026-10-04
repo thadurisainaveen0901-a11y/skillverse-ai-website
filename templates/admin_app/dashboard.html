@@ -1,0 +1,201 @@
+{% extends 'admin_app/base.html' %}
+
+{% block title %}Admin Dashboard - SkillVerse AI{% endblock %}
+
+{% block content %}
+<div class="admin-layout">
+    <!-- Sidebar -->
+    <aside class="admin-sidebar">
+        <div class="admin-logo">
+            <div class="admin-logo-icon">
+                <i class="fas fa-shield-halved"></i>
+            </div>
+            <div class="admin-logo-text">Skill<span>Verse</span> AI</div>
+            <button class="admin-theme-toggle" id="adminThemeToggle" aria-label="Toggle dark mode" style="margin-left: auto;">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+
+        <div class="admin-nav-section">
+            <h4>Main Menu</h4>
+            <a href="{% url 'admin_dashboard' %}" class="admin-nav-item active">
+                <i class="fas fa-chart-pie"></i>
+                Dashboard
+            </a>
+            <a href="{% url 'admin_users' %}" class="admin-nav-item">
+                <i class="fas fa-users"></i>
+                Users
+            </a>
+            <a href="{% url 'admin_interviews' %}" class="admin-nav-item">
+                <i class="fas fa-comments"></i>
+                Interviews
+            </a>
+        </div>
+
+        <div class="admin-nav-section">
+            <h4>System</h4>
+            <a href="{% url 'admin_settings' %}" class="admin-nav-item">
+                <i class="fas fa-cog"></i>
+                Settings
+            </a>
+            <a href="{% url 'admin_logout' %}" class="admin-nav-item">
+                <i class="fas fa-sign-out-alt"></i>
+                Logout
+            </a>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="admin-main">
+        <div class="admin-header">
+            <div>
+                <h1 class="admin-page-title">Dashboard</h1>
+                <p class="admin-page-subtitle">Welcome back, {{ request.user.username }}! Here's what's happening.</p>
+            </div>
+            <div style="display: flex; gap: 0.75rem; align-items: center;">
+                <span class="admin-badge admin-badge-active">Live</span>
+                <div class="admin-avatar">{{ request.user.username|first|upper }}</div>
+            </div>
+        </div>
+
+        <!-- Stats Grid -->
+        <div class="admin-grid admin-grid-4" style="margin-bottom: 2rem;">
+            <div class="admin-stat-card">
+                <div class="admin-stat-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="admin-stat-value">{{ total_users }}</div>
+                <div class="admin-stat-label">Total Users</div>
+                <div class="admin-stat-trend up">
+                    <i class="fas fa-arrow-up"></i> 12%
+                </div>
+            </div>
+            <div class="admin-stat-card">
+                <div class="admin-stat-icon" style="background: linear-gradient(135deg, #34C759 0%, #30D158 100%);">
+                    <i class="fas fa-comments"></i>
+                </div>
+                <div class="admin-stat-value">{{ total_interviews }}</div>
+                <div class="admin-stat-label">Total Interviews</div>
+                <div class="admin-stat-trend up">
+                    <i class="fas fa-arrow-up"></i> 8%
+                </div>
+            </div>
+            <div class="admin-stat-card">
+                <div class="admin-stat-icon" style="background: linear-gradient(135deg, #FF9500 0%, #FF8C00 100%);">
+                    <i class="fas fa-star"></i>
+                </div>
+                <div class="admin-stat-value">{{ avg_score }}%</div>
+                <div class="admin-stat-label">Avg Score</div>
+                <div class="admin-stat-trend up">
+                    <i class="fas fa-arrow-up"></i> 5%
+                </div>
+            </div>
+            <div class="admin-stat-card">
+                <div class="admin-stat-icon" style="background: linear-gradient(135deg, #00C2FF 0%, #007AFF 100%);">
+                    <i class="fas fa-file-alt"></i>
+                </div>
+                <div class="admin-stat-value">{{ total_users|add:total_interviews }}</div>
+                <div class="admin-stat-label">Total Activities</div>
+                <div class="admin-stat-trend up">
+                    <i class="fas fa-arrow-up"></i> 15%
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Users & Interviews -->
+        <div class="admin-grid admin-grid-2">
+            <!-- Recent Users -->
+            <div class="admin-card">
+                <div class="admin-card-header">
+                    <h3 class="admin-card-title">Recent Users</h3>
+                    <a href="{% url 'admin_users' %}" class="admin-btn admin-btn-secondary admin-btn-sm">View All</a>
+                </div>
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>User</th>
+                            <th>Joined</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for user in recent_users %}
+                        <tr>
+                            <td>
+                                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                    <div class="admin-avatar-sm">{{ user.username|first|upper }}</div>
+                                    <span>{{ user.username }}</span>
+                                </div>
+                            </td>
+                            <td>{{ user.date_joined|date:"M d, Y" }}</td>
+                            <td><span class="admin-badge admin-badge-active">Active</span></td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="3" style="text-align: center; color: var(--text-tertiary);">No users yet</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Recent Interviews -->
+            <div class="admin-card">
+                <div class="admin-card-header">
+                    <h3 class="admin-card-title">Recent Interviews</h3>
+                    <a href="{% url 'admin_interviews' %}" class="admin-btn admin-btn-secondary admin-btn-sm">View All</a>
+                </div>
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>User</th>
+                            <th>Role</th>
+                            <th>Score</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for interview in recent_interviews %}
+                        <tr>
+                            <td>
+                                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                    <div class="admin-avatar-sm">{{ interview.user.username|first|upper }}</div>
+                                    <span>{{ interview.user.username }}</span>
+                                </div>
+                            </td>
+                            <td>{{ interview.role|default:"N/A" }}</td>
+                            <td>
+                                <span class="admin-badge {% if interview.score >= 70 %}admin-badge-active{% elif interview.score >= 40 %}admin-badge-pending{% else %}admin-badge-blocked{% endif %}">
+                                    {{ interview.score|default:0 }}%
+                                </span>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="3" style="text-align: center; color: var(--text-tertiary);">No interviews yet</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script>
+    gsap.from('.admin-stat-card', {
+        opacity: 0,
+        y: 20,
+        duration: 0.6,
+        stagger: 0.1,
+        ease: 'power3.out'
+    });
+    gsap.from('.admin-card', {
+        opacity: 0,
+        y: 20,
+        duration: 0.6,
+        stagger: 0.15,
+        delay: 0.3,
+        ease: 'power3.out'
+    });
+</script>
+{% endblock %}

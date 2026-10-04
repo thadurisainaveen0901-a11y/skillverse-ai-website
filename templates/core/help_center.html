@@ -1,0 +1,97 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Help Center - SkillVerse AI{% endblock %}
+
+{% block content %}
+<section class="page-section">
+    <div class="page-bg">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+    </div>
+    <div class="page-container">
+        <div class="page-header">
+            <span class="section-tag">Help Center</span>
+            <h1>How Can We <span class="gradient-text">Help You?</span></h1>
+            <p>Find answers to common questions and get support when you need it</p>
+        </div>
+
+        <!-- Search Bar -->
+        <div class="liquid-card" style="max-width: 600px; margin: 0 auto 3rem; padding: 1.5rem;" data-tilt>
+            <div style="display: flex; align-items: center; gap: 1rem; background: rgba(0,0,0,0.03); border-radius: var(--radius-md); padding: 1rem 1.5rem;">
+                <i class="fas fa-search" style="color: var(--text-tertiary); font-size: 1.25rem;"></i>
+                <input type="text" placeholder="Search for help..." style="flex: 1; border: none; background: none; outline: none; font-size: 1rem; color: var(--text-primary);">
+                <button class="btn btn-primary btn-sm">Search</button>
+            </div>
+        </div>
+
+        <!-- Help Categories -->
+        <div class="features-grid" style="margin-bottom: 3rem;">
+            <div class="feature-card" data-tilt>
+                <div class="feature-icon"><i class="fas fa-file-alt"></i></div>
+                <h3 class="feature-title">Resume Help</h3>
+                <p class="feature-desc">Learn how to upload, analyze, and optimize your resume for ATS systems.</p>
+                <ul class="feature-list">
+                    <li><i class="fas fa-check"></i> How to upload your resume</li>
+                    <li><i class="fas fa-check"></i> Understanding ATS scores</li>
+                    <li><i class="fas fa-check"></i> Fixing common issues</li>
+                </ul>
+            </div>
+            <div class="feature-card" data-tilt>
+                <div class="feature-icon"><i class="fas fa-code"></i></div>
+                <h3 class="feature-title">Interview Help</h3>
+                <p class="feature-desc">Get the most out of your interview practice sessions.</p>
+                <ul class="feature-list">
+                    <li><i class="fas fa-check"></i> Starting a practice session</li>
+                    <li><i class="fas fa-check"></i> Understanding feedback</li>
+                    <li><i class="fas fa-check"></i> Improving your scores</li>
+                </ul>
+            </div>
+            <div class="feature-card" data-tilt>
+                <div class="feature-icon"><i class="fas fa-user"></i></div>
+                <h3 class="feature-title">Account Help</h3>
+                <p class="feature-desc">Manage your account settings and preferences.</p>
+                <ul class="feature-list">
+                    <li><i class="fas fa-check"></i> Updating your profile</li>
+                    <li><i class="fas fa-check"></i> Changing your password</li>
+                    <li><i class="fas fa-check"></i> Notification settings</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- FAQ Section -->
+        <div class="liquid-card" style="padding: 3rem; margin-bottom: 3rem;" data-tilt>
+            <h2 style="font-family: var(--font-primary); font-size: 2rem; margin-bottom: 2rem; text-align: center;">Frequently Asked <span class="gradient-text">Questions</span></h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem;">
+                <div style="padding: 1.5rem; background: rgba(0,0,0,0.02); border-radius: var(--radius-md);">
+                    <h4 style="font-weight: 700; margin-bottom: 0.5rem;">How do I upload my resume?</h4>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem;">Navigate to the Resume Analyzer page and click the upload area or drag and drop your file.</p>
+                </div>
+                <div style="padding: 1.5rem; background: rgba(0,0,0,0.02); border-radius: var(--radius-md);">
+                    <h4 style="font-weight: 700; margin-bottom: 0.5rem;">What file formats are supported?</h4>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem;">We support PDF, DOCX, and TXT files up to 10MB in size.</p>
+                </div>
+                <div style="padding: 1.5rem; background: rgba(0,0,0,0.02); border-radius: var(--radius-md);">
+                    <h4 style="font-weight: 700; margin-bottom: 0.5rem;">How is my ATS score calculated?</h4>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem;">Your resume is analyzed across 6 categories: contact info, skills, education, projects, experience, and links.</p>
+                </div>
+                <div style="padding: 1.5rem; background: rgba(0,0,0,0.02); border-radius: var(--radius-md);">
+                    <h4 style="font-weight: 700; margin-bottom: 0.5rem;">Can I practice interviews for any role?</h4>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem;">We currently support Python, JavaScript, Data Science, DevOps, Full Stack, and General roles.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact Support -->
+        <div class="liquid-card" style="padding: 3rem; text-align: center;" data-tilt>
+            <h2 style="font-family: var(--font-primary); font-size: 2rem; margin-bottom: 1rem;">Still Need <span class="gradient-text">Help?</span></h2>
+            <p style="color: var(--text-secondary); margin-bottom: 2rem;">Our support team is here to help you succeed.</p>
+            <div class="hero-actions" style="justify-content: center; margin-bottom: 0;">
+                <a href="/contact/" class="btn btn-primary btn-lg">
+                    <i class="fas fa-envelope"></i>
+                    <span>Contact Support</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,296 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Resume Analyzer - SkillVerse AI{% endblock %}
+
+{% block content %}
+<section class="tool-section">
+    <div class="tool-bg">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+    </div>
+    <<div class="tool-container">
+        <div class="tool-header">
+            <span class="section-tag">Resume Analyzer</span>
+            <h1>Upload Your Resume</h1>
+            <p>Upload your resume file and get instant ATS scoring with personalized feedback</p>
+        </div>
+
+        <div class="tool-grid">
+            <div class="upload-card" data-tilt>
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-icon"><i class="fas fa-cloud-upload-alt"></i></div>
+                    <h3>Drop your resume here</h3>
+                    <p>or click to browse</p>
+                    <span class="upload-formats">PDF, DOCX, TXT (Max 10MB)</span>
+                    <input type="file" id="resumeFile" accept=".pdf,.docx,.txt" hidden>
+                </div>
+                <div class="upload-progress" id="uploadProgress" style="display:none;">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <span class="progress-text" id="progressText">Uploading...</span>
+                </div>
+                <div style="margin-top: 1.5rem;">
+                    <h4 style="font-family: var(--font-primary); margin-bottom: 1rem;">Select Target Role</h4>
+                    <div class="role-grid" style="grid-template-columns: repeat(2, 1fr);">
+                        <div class="role-card selected" data-role="python_developer"><i class="fab fa-python"></i><span>Python</span></div>
+                        <div class="role-card" data-role="javascript_developer"><i class="fab fa-js"></i><span>JavaScript</span></div>
+                        <div class="role-card" data-role="data_scientist"><i class="fas fa-chart-bar"></i><span>Data Science</span></div>
+                        <div class="role-card" data-role="devops_engineer"><i class="fas fa-server"></i><span>DevOps</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="results-card" id="resultsCard" style="display:none;" data-tilt>
+                <div class="results-header">
+                    <h3><i class="fas fa-chart-pie"></i> Analysis Results</h3>
+                    <button class="btn btn-sm btn-outline" id="newAnalysisBtn">
+                        <i class="fas fa-redo"></i> New Analysis
+                    </button>
+                </div>
+                <div class="score-display">
+                    <div class="score-circle" id="scoreCircle">
+                        <svg viewBox="0 0 120 120">
+                            <circle class="score-bg" cx="60" cy="60" r="54"/>
+                            <circle class="score-fill" cx="60" cy="60" r="54" id="scoreCircleFill"/>
+                        </svg>
+                        <div class="score-text">
+                            <span class="score-number" id="atsScore">0</span>
+                            <span class="score-label">ATS Score</span>
+                        </div>
+                    </div>
+                    <div class="score-details">
+                        <div class="score-item">
+                            <span class="score-item-label">Keywords Matched</span>
+                            <span class="score-item-value" id="keywordsMatched">0/0</span>
+                        </div>
+                        <div class="score-item">
+                            <span class="score-item-label">Skills Found</span>
+                            <span class="score-item-value" id="skillsFound">0</span>
+                        </div>
+                        <div class="score-item">
+                            <span class="score-item-label">Word Count</span>
+                            <span class="score-item-value" id="wordCount">0</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="analysis-sections">
+                    <div class="analysis-section">
+                        <h4><i class="fas fa-check-circle"></i> Strengths</h4>
+                        <ul id="strengthsList"></ul>
+                    </div>
+                    <div class="analysis-section">
+                        <h4><i class="fas fa-exclamation-triangle"></i> Suggestions</h4>
+                        <ul id="suggestionsList"></ul>
+                    </div>
+                    <div class="analysis-section">
+                        <h4><i class="fas fa-search"></i> Missing Keywords</h4>
+                        <div id="missingKeywords" class="keyword-tags"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ATS Breakdown Section -->
+        <div class="liquid-card" id="atsBreakdown" style="margin-top: 2.5rem; padding: 2.5rem; display:none;" data-tilt>
+            <h3 style="font-family: var(--font-primary); margin-bottom: 1.5rem;"><i class="fas fa-chart-bar"></i> ATS Score Breakdown</h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem;">
+                <div style="text-align: center; padding: 1.5rem; background: rgba(0,0,0,0.02); border-radius: var(--radius-md);">
+                    <div style="font-size: 2rem; font-weight: 800; color: var(--primary);" id="contactBreakdown">0</div>
+                    <div style="font-size: 0.85rem; color: var(--text-tertiary);">Contact Info</div>
+                    <div class="progress-bar" style="margin-top: 0.5rem; height: 6px;">
+                        <div class="progress-fill" id="contactBar" style="width: 0%"></div>
+                    </div>
+                </div>
+                <div style="text-align: center; padding: 1.5rem; background: rgba(0,0,0,0.02); border-radius: var(--radius-md);">
+                    <div style="font-size: 2rem; font-weight: 800; color: var(--primary);" id="skillsBreakdown">0</div>
+                    <div style="font-size: 0.85rem; color: var(--text-tertiary);">Skills</div>
+                    <div class="progress-bar" style="margin-top: 0.5rem; height: 6px;">
+                        <div class="progress-fill" id="skillsBar" style="width: 0%"></div>
+                    </div>
+                </div>
+                <div style="text-align: center; padding: 1.5rem; background: rgba(0,0,0,0.02); border-radius: var(--radius-md);">
+                    <div style="font-size: 2rem; font-weight: 800; color: var(--primary);" id="educationBreakdown">0</div>
+                    <div style="font-size: 0.85rem; color: var(--text-tertiary);">Education</div>
+                    <div class="progress-bar" style="margin-top: 0.5rem; height: 6px;">
+                        <div class="progress-fill" id="educationBar" style="width: 0%"></div>
+                    </div>
+                </div>
+                <div style="text-align: center; padding: 1.5rem; background: rgba(0,0,0,0.02); border-radius: var(--radius-md);">
+                    <div style="font-size: 2rem; font-weight: 800; color: var(--primary);" id="socialBreakdown">0</div>
+                    <div style="font-size: 0.85rem; color: var(--text-tertiary);">Social Links</div>
+                    <div class="progress-bar" style="margin-top: 0.5rem; height: 6px;">
+                        <div class="progress-fill" id="socialBar" style="width: 0%"></div>
+                    </div>
+                </div>
+                <div style="text-align: center; padding: 1.5rem; background: rgba(0,0,0,0.02); border-radius: var(--radius-md);">
+                    <div style="font-size: 2rem; font-weight: 800; color: var(--primary);" id="projectsBreakdown">0</div>
+                    <div style="font-size: 0.85rem; color: var(--text-tertiary);">Projects</div>
+                    <div class="progress-bar" style="margin-top: 0.5rem; height: 6px;">
+                        <div class="progress-fill" id="projectsBar" style="width: 0%"></div>
+                    </div>
+                </div>
+                <div style="text-align: center; padding: 1.5rem; background: rgba(0,0,0,0.02); border-radius: var(--radius-md);">
+                    <div style="font-size: 2rem; font-weight: 800; color: var(--primary);" id="experienceBreakdown">0</div>
+                    <div style="font-size: 0.85rem; color: var(--text-tertiary);">Experience</div>
+                    <div class="progress-bar" style="margin-top: 0.5rem; height: 6px;">
+                        <div class="progress-fill" id="experienceBar" style="width: 0%"></div>
+                    </div>
+                </div>
+                <div style="text-align: center; padding: 1.5rem; background: rgba(0,0,0,0.02); border-radius: var(--radius-md);">
+                    <div style="font-size: 2rem; font-weight: 800; color: var(--primary);" id="linksBreakdown">0</div>
+                    <div style="font-size: 0.85rem; color: var(--text-tertiary);">Links</div>
+                    <div class="progress-bar" style="margin-top: 0.5rem; height: 6px;">
+                        <div class="progress-fill" id="linksBar" style="width: 0%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tips Section -->
+        <div class="liquid-card" style="margin-top: 2.5rem; padding: 2.5rem;" data-tilt>
+            <h3 style="font-family: var(--font-primary); margin-bottom: 1.5rem;"><i class="fas fa-lightbulb"></i> Resume Tips</h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem;">
+                <div style="display: flex; gap: 1rem; padding: 1rem; background: rgba(0,0,0,0.02); border-radius: var(--radius-md);">
+                    <div style="width: 40px; height: 40px; border-radius: 10px; background: var(--gradient-1); display: flex; align-items: center; justify-content: center; color: white; flex-shrink: 0;">
+                        <i class="fas fa-check"></i>
+                    </div>
+                    <div>
+                        <h4 style="font-weight: 600; font-size: 0.95rem;">Use Action Verbs</h4>
+                        <p style="font-size: 0.85rem; color: var(--text-secondary);">Start bullet points with strong action verbs like "Developed", "Implemented", "Led"</p>
+                    </div>
+                </div>
+                <div style="display: flex; gap: 1rem; padding: 1rem; background: rgba(0,0,0,0.02); border-radius: var(--radius-md);">
+                    <div style="width: 40px; height: 40px; border-radius: 10px; background: var(--gradient-2); display: flex; align-items: center; justify-content: center; color: white; flex-shrink: 0;">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div>
+                        <h4 style="font-weight: 600; font-size: 0.95rem;">Quantify Achievements</h4>
+                        <p style="font-size: 0.85rem; color: var(--text-secondary);">Use numbers to show impact: "Increased sales by 25%" or "Managed team of 10"</p>
+                    </div>
+                </div>
+                <div style="display: flex; gap: 1rem; padding: 1rem; background: rgba(0,0,0,0.02); border-radius: var(--radius-md);">
+                    <div style="width: 40px; height: 40px; border-radius: 10px; background: var(--gradient-4); display: flex; align-items: center; justify-content: center; color: white; flex-shrink: 0;">
+                        <i class="fas fa-key"></i>
+                    </div>
+                    <div>
+                        <h4 style="font-weight: 600; font-size: 0.95rem;">Include Keywords</h4>
+                        <p style="font-size: 0.85rem; color: var(--text-secondary);">Mirror keywords from the job description to pass ATS filters</p>
+                    </div>
+                </div>
+                <div style="display: flex; gap: 1rem; padding: 1rem; background: rgba(0,0,0,0.02); border-radius: var(--radius-md);">
+                    <div style="width: 40px; height: 40px; border-radius: 10px; background: var(--gradient-3); display: flex; align-items: center; justify-content: center; color: white; flex-shrink: 0;">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <div>
+                        <h4 style="font-weight: 600; font-size: 0.95rem;">Keep It Concise</h4>
+                        <p style="font-size: 0.85rem; color: var(--text-secondary);">Limit to 1-2 pages. Recruiters spend only 7 seconds on initial scan</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+const uploadArea = document.getElementById('uploadArea');
+const resumeFile = document.getElementById('resumeFile');
+const uploadProgress = document.getElementById('uploadProgress');
+const progressFill = document.getElementById('progressFill');
+const progressText = document.getElementById('progressText');
+const resultsCard = document.getElementById('resultsCard');
+const newAnalysisBtn = document.getElementById('newAnalysisBtn');
+const atsBreakdown = document.getElementById('atsBreakdown');
+let selectedRole = 'python_developer';
+
+// Role selection
+document.querySelectorAll('.role-card').forEach(card => {
+    card.addEventListener('click', () => {
+        document.querySelectorAll('.role-card').forEach(c => c.classList.remove('selected'));
+        card.classList.add('selected');
+        selectedRole = card.dataset.role;
+    });
+});
+
+uploadArea.addEventListener('click', () => resumeFile.click());
+uploadArea.addEventListener('dragover', (e) => { e.preventDefault(); uploadArea.classList.add('dragover'); });
+uploadArea.addEventListener('dragleave', () => uploadArea.classList.remove('dragover'));
+uploadArea.addEventListener('drop', (e) => {
+    e.preventDefault(); uploadArea.classList.remove('dragover');
+    if (e.dataTransfer.files.length) { resumeFile.files = e.dataTransfer.files; handleFile(e.dataTransfer.files[0]); }
+});
+resumeFile.addEventListener('change', () => { if (resumeFile.files.length) handleFile(resumeFile.files[0]); });
+
+function handleFile(file) {
+    const maxSize = 10 * 1024 * 1024;
+    if (file.size > maxSize) { alert('File size must be below 10 MB.'); return; }
+
+    uploadProgress.style.display = 'block';
+    progressFill.style.width = '30%';
+    progressText.textContent = 'Uploading...';
+
+    const formData = new FormData();
+    formData.append('resume', file);
+    formData.append('role', selectedRole);
+
+    fetch('/api/resume/analyze', { method: 'POST', body: formData })
+    .then(res => res.json())
+    .then(data => {
+        progressFill.style.width = '100%';
+        progressText.textContent = 'Complete!';
+        setTimeout(() => { uploadProgress.style.display = 'none'; displayResults(data); }, 500);
+    })
+    .catch(err => { progressText.textContent = 'Error: ' + err.message; progressFill.style.background = 'var(--danger)'; });
+}
+
+function displayResults(data) {
+    resultsCard.style.display = 'block';
+    atsBreakdown.style.display = 'block';
+
+    const score = data.ats_score || 0;
+    document.getElementById('atsScore').textContent = score;
+    document.getElementById('keywordsMatched').textContent = (data.keywords_matched?.length || 0) + '/' + (data.keywords_total || 0);
+    document.getElementById('skillsFound').textContent = data.skills_found || 0;
+    document.getElementById('wordCount').textContent = data.word_count || 0;
+
+    // Update circle
+    const circumference = 2 * Math.PI * 54;
+    const offset = circumference - (score / 100) * circumference;
+    document.getElementById('scoreCircleFill').style.strokeDashoffset = offset;
+
+    // Update breakdown
+    document.getElementById('contactBreakdown').textContent = data.contact_score || 0;
+    document.getElementById('skillsBreakdown').textContent = data.skills_score || 0;
+    document.getElementById('educationBreakdown').textContent = data.education_score || 0;
+    document.getElementById('projectsBreakdown').textContent = data.projects_score || 0;
+    document.getElementById('experienceBreakdown').textContent = data.experience_score || 0;
+    document.getElementById('linksBreakdown').textContent = data.links_score || 0;
+
+    document.getElementById('contactBar').style.width = ((data.contact_score || 0) / 15 * 100) + '%';
+    document.getElementById('skillsBar').style.width = ((data.skills_score || 0) / 20 * 100) + '%';
+    document.getElementById('educationBar').style.width = ((data.education_score || 0) / 15 * 100) + '%';
+    document.getElementById('projectsBar').style.width = ((data.projects_score || 0) / 20 * 100) + '%';
+    document.getElementById('experienceBar').style.width = ((data.experience_score || 0) / 20 * 100) + '%';
+    document.getElementById('linksBar').style.width = ((data.links_score || 0) / 10 * 100) + '%';
+
+    // Strengths
+    document.getElementById('strengthsList').innerHTML = (data.strengths || []).map(s => `<li><i class="fas fa-check"></i> ${s}</li>`).join('');
+
+    // Suggestions
+    document.getElementById('suggestionsList').innerHTML = (data.suggestions || []).map(s => `<li><i class="fas fa-arrow-right"></i> ${s}</li>`).join('');
+
+    // Missing keywords
+    document.getElementById('missingKeywords').innerHTML = (data.missing_keywords || []).map(k => `<span class="keyword-tag">${k}</span>`).join('');
+
+    resultsCard.scrollIntoView({ behavior: 'smooth' });
+}
+
+newAnalysisBtn.addEventListener('click', () => {
+    resultsCard.style.display = 'none';
+    atsBreakdown.style.display = 'none';
+    resumeFile.value = '';
+});
+</script>
+{% endblock %}

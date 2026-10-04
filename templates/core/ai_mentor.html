@@ -1,0 +1,124 @@
+{% extends 'core/base.html' %}
+
+{% block title %}AI Mentor - SkillVerse AI{% endblock %}
+
+{% block content %}
+<section class="page-section">
+    <div class="page-bg">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+    </div>
+    <div class="page-container">
+        <div class="page-header">
+            <span class="section-tag">AI Mentor</span>
+            <h1>Your Personal <span class="gradient-text">AI Career Coach</span></h1>
+            <p>Get instant answers, personalized guidance, and 24/7 support</p>
+        </div>
+
+        <div class="liquid-card" style="padding: 2rem; max-width: 800px; margin: 0 auto;" data-tilt>
+            <div id="chatContainer" style="height: 400px; overflow-y: auto; padding: 1rem; background: rgba(0,0,0,0.02); border-radius: var(--radius-md); margin-bottom: 1rem;">
+                <div class="chat-message ai-message" style="display: flex; gap: 1rem; margin-bottom: 1rem;">
+                    <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--gradient-1); display: flex; align-items: center; justify-content: center; color: white; flex-shrink: 0;">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div style="background: rgba(91,95,239,0.1); padding: 1rem; border-radius: var(--radius-md); max-width: 80%;">
+                        <p style="margin: 0;">Hi! I'm your AI Career Mentor. I can help you with resume tips, interview preparation, career advice, and more. What would you like to know?</p>
+                    </div>
+                </div>
+            </div>
+            <form id="chatForm" style="display: flex; gap: 1rem;">
+                <input type="text" id="chatInput" placeholder="Ask me anything about your career..." style="flex: 1; padding: 1rem; border: 2px solid var(--bg-tertiary); border-radius: var(--radius-md); font-size: 1rem;">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </form>
+            <div style="display: flex; gap: 0.5rem; margin-top: 1rem; flex-wrap: wrap;">
+                <button class="btn btn-sm btn-outline" onclick="askQuickQuestion('How to improve my resume?')">Resume Tips</button>
+                <button class="btn btn-sm btn-outline" onclick="askQuickQuestion('How to prepare for interviews?')">Interview Prep</button>
+                <button class="btn btn-sm btn-outline" onclick="askQuickQuestion('What skills are in demand?')">Skills Guide</button>
+                <button class="btn btn-sm btn-outline" onclick="askQuickQuestion('How to negotiate salary?')">Salary Tips</button>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+const chatContainer = document.getElementById('chatContainer');
+const chatForm = document.getElementById('chatForm');
+const chatInput = document.getElementById('chatInput');
+
+const aiResponses = {
+    'resume': [
+        "To improve your resume: 1) Use action verbs, 2) Quantify achievements with numbers, 3) Tailor it to each job description, 4) Keep it to 1-2 pages, 5) Use a clean, ATS-friendly format.",
+        "Your resume should include: Professional summary, work experience with metrics, relevant skills, education, and certifications. Use keywords from the job description!",
+        "ATS tip: Use standard fonts (Arial, Calibri), avoid tables and graphics, include relevant keywords, and save as PDF or DOCX."
+    ],
+    'interview': [
+        "For interview success: 1) Research the company, 2) Practice STAR method, 3) Prepare 5-7 stories, 4) Ask thoughtful questions, 5) Follow up with a thank-you email.",
+        "Common interview questions: 'Tell me about yourself', 'Why this company?', 'Greatest strength/weakness', 'Describe a challenge you overcame'. Practice these!",
+        "Body language matters: Maintain eye contact, sit up straight, smile, and use hand gestures. First impressions are made in 7 seconds!"
+    ],
+    'skills': [
+        "Top in-demand skills 2024: Python, JavaScript, React, AWS, Docker, Kubernetes, Machine Learning, Data Analysis, SQL, and Communication.",
+        "For tech roles: Focus on programming languages, cloud platforms, and soft skills. For business roles: Data analysis, project management, and communication.",
+        "Learn skills through: Online courses (Coursera, Udemy), personal projects, open source contributions, and certifications."
+    ],
+    'salary': [
+        "Salary negotiation tips: 1) Research market rates, 2) Know your worth, 3) Practice your pitch, 4) Consider total compensation, 5) Be ready to walk away.",
+        "Always negotiate! Most employers expect it. Aim for 10-20% above the initial offer. Use data from Glassdoor, Levels.fyi, and Payscale.",
+        "Consider: Base salary, bonus, stock options, benefits, 401k match, health insurance, PTO, and remote work options."
+    ],
+    'default': [
+        "That's a great question! I'd recommend focusing on continuous learning, building a strong network, and gaining practical experience through projects.",
+        "For career growth: Set clear goals, seek feedback regularly, take on challenging projects, and never stop learning.",
+        "Remember: Your career is a marathon, not a sprint. Focus on building skills, relationships, and a strong personal brand."
+    ]
+};
+
+function addMessage(text, isUser) {
+    const messageDiv = document.createElement('div');
+    messageDiv.className = `chat-message ${isUser ? 'user-message' : 'ai-message'}`;
+    messageDiv.style.cssText = `display: flex; gap: 1rem; margin-bottom: 1rem; ${isUser ? 'flex-direction: row-reverse;' : ''}`;
+    messageDiv.innerHTML = `
+        <div style="width: 40px; height: 40px; border-radius: 50%; background: ${isUser ? 'var(--gradient-2)' : 'var(--gradient-1)'}; display: flex; align-items: center; justify-content: center; color: white; flex-shrink: 0;">
+            <i class="fas fa-${isUser ? 'user' : 'robot'}"></i>
+        </div>
+        <div style="background: ${isUser ? 'rgba(0,194,255,0.1)' : 'rgba(91,95,239,0.1)'}; padding: 1rem; border-radius: var(--radius-md); max-width: 80%;">
+            <p style="margin: 0;">${text}</p>
+        </div>
+    `;
+    chatContainer.appendChild(messageDiv);
+    chatContainer.scrollTop = chatContainer.scrollHeight;
+}
+
+function getAIResponse(question) {
+    const q = question.toLowerCase();
+    if (q.includes('resume') || q.includes('cv')) return aiResponses.resume[Math.floor(Math.random() * aiResponses.resume.length)];
+    if (q.includes('interview') || q.includes('job')) return aiResponses.interview[Math.floor(Math.random() * aiResponses.interview.length)];
+    if (q.includes('skill') || q.includes('learn')) return aiResponses.skills[Math.floor(Math.random() * aiResponses.skills.length)];
+    if (q.includes('salary') || q.includes('pay') || q.includes('money')) return aiResponses.salary[Math.floor(Math.random() * aiResponses.salary.length)];
+    return aiResponses.default[Math.floor(Math.random() * aiResponses.default.length)];
+}
+
+chatForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const question = chatInput.value.trim();
+    if (!question) return;
+
+    addMessage(question, true);
+    chatInput.value = '';
+
+    setTimeout(() => {
+        const response = getAIResponse(question);
+        addMessage(response, false);
+    }, 800);
+});
+
+function askQuickQuestion(question) {
+    chatInput.value = question;
+    chatForm.dispatchEvent(new Event('submit'));
+}
+</script>
+{% endblock %}

@@ -1,0 +1,177 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Job Tracker - SkillVerse AI{% endblock %}
+
+{% block content %}
+<section class="page-section">
+    <div class="page-bg">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+    </div>
+    <div class="page-container">
+        <div class="page-header">
+            <span class="section-tag">Application Tracker</span>
+            <h1>Track Your <span class="gradient-text">Job Applications</span></h1>
+            <p>Organize and monitor all your job applications in one place</p>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats-grid" style="margin-bottom: 2rem;">
+            <div class="stat-card" data-tilt>
+                <div class="stat-icon"><i class="fas fa-briefcase"></i></div>
+                <div class="stat-info">
+                    <span class="stat-value" id="totalApplications">0</span>
+                    <span class="stat-label">Total Applications</span>
+                </div>
+            </div>
+            <div class="stat-card" data-tilt>
+                <div class="stat-icon"><i class="fas fa-clock"></i></div>
+                <div class="stat-info">
+                    <span class="stat-value" id="pendingApplications">0</span>
+                    <span class="stat-label">Pending</span>
+                </div>
+            </div>
+            <div class="stat-card" data-tilt>
+                <div class="stat-icon"><i class="fas fa-check-circle"></i></div>
+                <div class="stat-info">
+                    <span class="stat-value" id="interviewApplications">0</span>
+                    <span class="stat-label">Interviews</span>
+                </div>
+            </div>
+            <div class="stat-card" data-tilt>
+                <div class="stat-icon"><i class="fas fa-trophy"></i></div>
+                <div class="stat-info">
+                    <span class="stat-value" id="offerApplications">0</span>
+                    <span class="stat-label">Offers</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Add Application Form -->
+        <div class="liquid-card" style="padding: 2rem; margin-bottom: 2rem;" data-tilt>
+            <h3 style="font-family: var(--font-primary); margin-bottom: 1.5rem;"><i class="fas fa-plus-circle"></i> Add New Application</h3>
+            <form id="applicationForm">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                    <div class="form-group">
+                        <label>Company Name</label>
+                        <input type="text" id="companyName" placeholder="Google" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Position</label>
+                        <input type="text" id="position" placeholder="Software Engineer" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Status</label>
+                        <select id="status">
+                            <option value="applied">Applied</option>
+                            <option value="screening">Screening</option>
+                            <option value="interview">Interview</option>
+                            <option value="offer">Offer</option>
+                            <option value="rejected">Rejected</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Date Applied</label>
+                        <input type="date" id="dateApplied">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Notes</label>
+                    <textarea id="notes" rows="2" placeholder="Add any notes about this application..."></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-save"></i> Save Application
+                </button>
+            </form>
+        </div>
+
+        <!-- Applications List -->
+        <div class="liquid-card" style="padding: 2rem;" data-tilt>
+            <h3 style="font-family: var(--font-primary); margin-bottom: 1.5rem;"><i class="fas fa-list"></i> Your Applications</h3>
+            <div id="applicationsList">
+                <div class="empty-state">
+                    <i class="fas fa-briefcase"></i>
+                    <p>No applications yet. Add your first application above!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+let applications = JSON.parse(localStorage.getItem('applications') || '[]');
+
+function saveApplications() {
+    localStorage.setItem('applications', JSON.stringify(applications));
+    renderApplications();
+    updateStats();
+}
+
+function renderApplications() {
+    const list = document.getElementById('applicationsList');
+    if (applications.length === 0) {
+        list.innerHTML = '<div class="empty-state"><i class="fas fa-briefcase"></i><p>No applications yet. Add your first application above!</p></div>';
+        return;
+    }
+    list.innerHTML = applications.map((app, index) => `
+        <div class="interview-item" style="background: rgba(0,0,0,0.02);">
+            <div class="interview-info">
+                <span class="interview-role">${app.position}</span>
+                <span class="interview-date">${app.company} • ${app.date}</span>
+            </div>
+            <span class="status-badge status-${app.status}">${app.status}</span>
+            <button onclick="deleteApplication(${index})" class="btn btn-sm btn-outline" style="color: var(--danger);">
+                <i class="fas fa-trash"></i>
+            </button>
+        </div>
+    `).join('');
+}
+
+function updateStats() {
+    document.getElementById('totalApplications').textContent = applications.length;
+    document.getElementById('pendingApplications').textContent = applications.filter(a => a.status === 'applied').length;
+    document.getElementById('interviewApplications').textContent = applications.filter(a => a.status === 'interview').length;
+    document.getElementById('offerApplications').textContent = applications.filter(a => a.status === 'offer').length;
+}
+
+function deleteApplication(index) {
+    applications.splice(index, 1);
+    saveApplications();
+}
+
+document.getElementById('applicationForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const app = {
+        company: document.getElementById('companyName').value,
+        position: document.getElementById('position').value,
+        status: document.getElementById('status').value,
+        date: document.getElementById('dateApplied').value || new Date().toLocaleDateString(),
+        notes: document.getElementById('notes').value
+    };
+    applications.unshift(app);
+    saveApplications();
+    e.target.reset();
+});
+
+// Load on page load
+renderApplications();
+updateStats();
+</script>
+
+<style>
+.status-badge {
+    padding: 0.25rem 0.75rem;
+    border-radius: var(--radius-full);
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+.status-applied { background: rgba(91,95,239,0.1); color: var(--primary); }
+.status-screening { background: rgba(0,194,255,0.1); color: var(--secondary); }
+.status-interview { background: rgba(255,149,0,0.1); color: var(--warning); }
+.status-offer { background: rgba(52,199,89,0.1); color: var(--success); }
+.status-rejected { background: rgba(255,59,48,0.1); color: var(--danger); }
+</style>
+{% endblock %}

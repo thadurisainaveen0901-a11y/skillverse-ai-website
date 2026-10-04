@@ -1,0 +1,291 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Dashboard - SkillVerse AI{% endblock %}
+
+{% block content %}
+<section class="dashboard-section">
+    <div class="dashboard-container">
+        <div class="dashboard-header">
+            <div class="welcome-text">
+                <h1>Welcome back, <span class="gradient-text" id="userName">Student</span></h1>
+                <p>Here's your career preparation overview and progress tracking</p>
+            </div>
+            <div class="header-actions">
+                <a href="/resume/" class="btn btn-primary">
+                    <i class="fas fa-file-alt"></i>
+                    <span>Analyze Resume</span>
+                </a>
+                <a href="/interview/" class="btn btn-outline">
+                    <i class="fas fa-code"></i>
+                    <span>Practice Interview</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card" data-tilt>
+                <div class="stat-icon"><i class="fas fa-file-alt"></i></div>
+                <div class="stat-info">
+                    <span class="stat-value" id="resumeScore">--</span>
+                    <span class="stat-label">Latest ATS Score</span>
+                </div>
+            </div>
+            <div class="stat-card" data-tilt>
+                <div class="stat-icon"><i class="fas fa-code"></i></div>
+                <div class="stat-info">
+                    <span class="stat-value" id="totalInterviews">0</span>
+                    <span class="stat-label">Interviews Taken</span>
+                </div>
+            </div>
+            <div class="stat-card" data-tilt>
+                <div class="stat-icon"><i class="fas fa-chart-line"></i></div>
+                <div class="stat-info">
+                    <span class="stat-value" id="avgScore">0</span>
+                    <span class="stat-label">Average Score</span>
+                </div>
+            </div>
+            <div class="stat-card" data-tilt>
+                <div class="stat-icon"><i class="fas fa-trophy"></i></div>
+                <div class="stat-info">
+                    <span class="stat-value" id="highestScore">0</span>
+                    <span class="stat-label">Highest Score</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="dashboard-grid">
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <h3><i class="fas fa-history"></i> Recent Interviews</h3>
+                    <a href="/interview/" class="btn btn-sm btn-outline">View All</a>
+                </div>
+                <div id="recentInterviews">
+                    <div class="empty-state">
+                        <i class="fas fa-code"></i>
+                        <p>No interviews yet. Start practicing!</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <h3><i class="fas fa-lightbulb"></i> Quick Tips</h3>
+                </div>
+                <ul class="tips-list">
+                    <li><i class="fas fa-check"></i> Upload your resume to get an ATS score</li>
+                    <li><i class="fas fa-check"></i> Practice interviews regularly</li>
+                    <li><i class="fas fa-check"></i> Track your progress over time</li>
+                    <li><i class="fas fa-check"></i> Focus on improving weak areas</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="dashboard-grid" style="margin-top: 1.5rem;">
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <h3><i class="fas fa-chart-pie"></i> Skill Progress</h3>
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                    <div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span style="font-weight: 600;">Resume Optimization</span>
+                            <span style="color: var(--primary); font-weight: 700;" id="resumeProgressText">0%</span>
+                        </div>
+                        <div class="progress-bar" style="height: 8px;">
+                            <div class="progress-fill" id="resumeProgressBar" style="width: 0%;"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span style="font-weight: 600;">Interview Skills</span>
+                            <span style="color: var(--primary); font-weight: 700;" id="interviewProgressText">0%</span>
+                        </div>
+                        <div class="progress-bar" style="height: 8px;">
+                            <div class="progress-fill" id="interviewProgressBar" style="width: 0%;"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span style="font-weight: 600;">Technical Knowledge</span>
+                            <span style="color: var(--primary); font-weight: 700;" id="technicalProgressText">0%</span>
+                        </div>
+                        <div class="progress-bar" style="height: 8px;">
+                            <div class="progress-fill" id="technicalProgressBar" style="width: 0%;"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span style="font-weight: 600;">Communication</span>
+                            <span style="color: var(--primary); font-weight: 700;" id="communicationProgressText">0%</span>
+                        </div>
+                        <div class="progress-bar" style="height: 8px;">
+                            <div class="progress-fill" id="communicationProgressBar" style="width: 0%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <h3><i class="fas fa-bullseye"></i> Goals</h3>
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 1rem;" id="goalsList">
+                    <div style="display: flex; align-items: center; gap: 1rem; padding: 1rem; background: rgba(0,0,0,0.02); border-radius: var(--radius-md);">
+                        <div style="width: 40px; height: 40px; border-radius: 10px; background: var(--gradient-1); display: flex; align-items: center; justify-content: center; color: white;">
+                            <i class="fas fa-file-alt"></i>
+                        </div>
+                        <div style="flex: 1;">
+                            <h4 style="font-weight: 600; font-size: 0.95rem;">Analyze 5 Resumes</h4>
+                            <p style="font-size: 0.8rem; color: var(--text-tertiary);" id="resumeGoalText">0 of 5 completed</p>
+                        </div>
+                        <span style="color: var(--primary); font-weight: 700;" id="resumeGoalPercent">0%</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 1rem; padding: 1rem; background: rgba(0,0,0,0.02); border-radius: var(--radius-md);">
+                        <div style="width: 40px; height: 40px; border-radius: 10px; background: var(--gradient-2); display: flex; align-items: center; justify-content: center; color: white;">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <div style="flex: 1;">
+                            <h4 style="font-weight: 600; font-size: 0.95rem;">Complete 10 Interviews</h4>
+                            <p style="font-size: 0.8rem; color: var(--text-tertiary);" id="interviewGoalText">0 of 10 completed</p>
+                        </div>
+                        <span style="color: var(--primary); font-weight: 700;" id="interviewGoalPercent">0%</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 1rem; padding: 1rem; background: rgba(0,0,0,0.02); border-radius: var(--radius-md);">
+                        <div style="width: 40px; height: 40px; border-radius: 10px; background: var(--gradient-4); display: flex; align-items: center; justify-content: center; color: white;">
+                            <i class="fas fa-trophy"></i>
+                        </div>
+                        <div style="flex: 1;">
+                            <h4 style="font-weight: 600; font-size: 0.95rem;">Reach 90% ATS Score</h4>
+                            <p style="font-size: 0.8rem; color: var(--text-tertiary);" id="atsGoalText">Not started yet</p>
+                        </div>
+                        <span style="color: var(--text-tertiary); font-weight: 700;" id="atsGoalPercent">0%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="liquid-card" style="margin-top: 1.5rem; padding: 2rem;" data-tilt>
+            <div class="card-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                <h3 style="font-family: var(--font-primary); font-size: 1.15rem; display: flex; align-items: center; gap: 0.6rem; font-weight: 700;">
+                    <i class="fas fa-chart-line" style="color: var(--primary);"></i> Weekly Activity
+                </h3>
+            </div>
+            <div style="display: flex; align-items: flex-end; gap: 1rem; height: 150px; padding: 0 0.5rem;" id="weeklyChart">
+                <div style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 0.5rem;">
+                    <div class="chart-bar" style="width: 100%; height: 60%;"></div>
+                    <span style="font-size: 0.75rem; color: var(--text-tertiary);">Mon</span>
+                </div>
+                <div style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 0.5rem;">
+                    <div class="chart-bar" style="width: 100%; height: 80%;"></div>
+                    <span style="font-size: 0.75rem; color: var(--text-tertiary);">Tue</span>
+                </div>
+                <div style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 0.5rem;">
+                    <div class="chart-bar" style="width: 100%; height: 45%;"></div>
+                    <span style="font-size: 0.75rem; color: var(--text-tertiary);">Wed</span>
+                </div>
+                <div style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 0.5rem;">
+                    <div class="chart-bar" style="width: 100%; height: 90%;"></div>
+                    <span style="font-size: 0.75rem; color: var(--text-tertiary);">Thu</span>
+                </div>
+                <div style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 0.5rem;">
+                    <div class="chart-bar" style="width: 100%; height: 70%;"></div>
+                    <span style="font-size: 0.75rem; color: var(--text-tertiary);">Fri</span>
+                </div>
+                <div style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 0.5rem;">
+                    <div class="chart-bar" style="width: 100%; height: 55%;"></div>
+                    <span style="font-size: 0.75rem; color: var(--text-tertiary);">Sat</span>
+                </div>
+                <div style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 0.5rem;">
+                    <div class="chart-bar" style="width: 100%; height: 40%;"></div>
+                    <span style="font-size: 0.75rem; color: var(--text-tertiary);">Sun</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+// Dashboard dynamic data loading
+async function loadDashboard() {
+    // Load user data
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    if (user.first_name || user.username) {
+        document.getElementById('userName').textContent = user.first_name || user.username;
+    }
+
+    // Load saved resume data
+    const resumeData = JSON.parse(localStorage.getItem('resumeData') || 'null');
+    if (resumeData) {
+        document.getElementById('resumeScore').textContent = resumeData.ats_score || 0;
+        document.getElementById('resumeProgressText').textContent = (resumeData.ats_score || 0) + '%';
+        document.getElementById('resumeProgressBar').style.width = (resumeData.ats_score || 0) + '%';
+    }
+
+    // Load saved interview data
+    const interviewData = JSON.parse(localStorage.getItem('interviewData') || '[]');
+    if (interviewData.length > 0) {
+        document.getElementById('totalInterviews').textContent = interviewData.length;
+        const scores = interviewData.map(i => parseFloat(i.score) || 0);
+        const avg = scores.reduce((a, b) => a + b, 0) / scores.length;
+        document.getElementById('avgScore').textContent = avg.toFixed(1);
+        document.getElementById('highestScore').textContent = Math.max(...scores).toFixed(1) + '/10';
+        document.getElementById('interviewProgressText').textContent = avg.toFixed(0) + '%';
+        document.getElementById('interviewProgressBar').style.width = (avg * 10) + '%';
+
+        // Update recent interviews
+        const recentHtml = interviewData.slice(-3).reverse().map(i => `
+            <div class="interview-item">
+                <div class="interview-info">
+                    <span class="interview-role">${i.role || 'Interview'}</span>
+                    <span class="interview-date">${i.date || 'Recently'}</span>
+                </div>
+                <span class="interview-score">${i.score}/10</span>
+            </div>
+        `).join('');
+        document.getElementById('recentInterviews').innerHTML = recentHtml;
+    }
+
+    // Update goals based on data
+    const goalsList = document.getElementById('goalsList');
+    if (resumeData || interviewData.length > 0) {
+        let goalsHtml = '';
+        if (resumeData) {
+            const resumeScore = resumeData.ats_score || 0;
+            goalsHtml += `
+                <div style="display: flex; align-items: center; gap: 1rem; padding: 1rem; background: rgba(0,0,0,0.02); border-radius: var(--radius-md);">
+                    <div style="width: 40px; height: 40px; border-radius: 10px; background: var(--gradient-1); display: flex; align-items: center; justify-content: center; color: white;">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <div style="flex: 1;">
+                        <h4 style="font-weight: 600; font-size: 0.95rem;">Resume Score: ${resumeScore}%</h4>
+                        <p style="font-size: 0.8rem; color: var(--text-tertiary);">${resumeScore >= 80 ? 'Excellent!' : resumeScore >= 60 ? 'Good progress' : 'Keep improving'}</p>
+                    </div>
+                    <span style="color: ${resumeScore >= 80 ? 'var(--success)' : 'var(--primary)'}; font-weight: 700;">${resumeScore}%</span>
+                </div>
+            `;
+        }
+        if (interviewData.length > 0) {
+            const avgScore = interviewData.reduce((a, b) => a + (parseFloat(b.score) || 0), 0) / interviewData.length;
+            goalsHtml += `
+                <div style="display: flex; align-items: center; gap: 1rem; padding: 1rem; background: rgba(0,0,0,0.02); border-radius: var(--radius-md);">
+                    <div style="width: 40px; height: 40px; border-radius: 10px; background: var(--gradient-2); display: flex; align-items: center; justify-content: center; color: white;">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <div style="flex: 1;">
+                        <h4 style="font-weight: 600; font-size: 0.95rem;">Interview Avg: ${avgScore.toFixed(1)}/10</h4>
+                        <p style="font-size: 0.8rem; color: var(--text-tertiary);">${interviewData.length} interviews completed</p>
+                    </div>
+                    <span style="color: var(--primary); font-weight: 700;">${(avgScore * 10).toFixed(0)}%</span>
+                </div>
+            `;
+        }
+        goalsList.innerHTML = goalsHtml;
+    }
+}
+
+// Load dashboard on page load
+loadDashboard();
+</script>
+{% endblock %}

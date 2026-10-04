@@ -1,0 +1,126 @@
+{% extends 'admin_app/base.html' %}
+
+{% block title %}Manage Users - SkillVerse AI{% endblock %}
+
+{% block content %}
+<div class="admin-layout">
+    <!-- Sidebar -->
+    <aside class="admin-sidebar">
+        <div class="admin-logo">
+            <div class="admin-logo-icon">
+                <i class="fas fa-shield-halved"></i>
+            </div>
+            <div class="admin-logo-text">Skill<span>Verse</span> AI</div>
+            <button class="admin-theme-toggle" id="adminThemeToggle" aria-label="Toggle dark mode" style="margin-left: auto;">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+
+        <div class="admin-nav-section">
+            <h4>Main Menu</h4>
+            <a href="{% url 'admin_dashboard' %}" class="admin-nav-item">
+                <i class="fas fa-chart-pie"></i>
+                Dashboard
+            </a>
+            <a href="{% url 'admin_users' %}" class="admin-nav-item active">
+                <i class="fas fa-users"></i>
+                Users
+            </a>
+            <a href="{% url 'admin_interviews' %}" class="admin-nav-item">
+                <i class="fas fa-comments"></i>
+                Interviews
+            </a>
+        </div>
+
+        <div class="admin-nav-section">
+            <h4>System</h4>
+            <a href="{% url 'admin_settings' %}" class="admin-nav-item">
+                <i class="fas fa-cog"></i>
+                Settings
+            </a>
+            <a href="{% url 'admin_logout' %}" class="admin-nav-item">
+                <i class="fas fa-sign-out-alt"></i>
+                Logout
+            </a>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="admin-main">
+        <div class="admin-header">
+            <div>
+                <h1 class="admin-page-title">Manage Users</h1>
+                <p class="admin-page-subtitle">View and manage all registered users</p>
+            </div>
+            <div style="display: flex; gap: 0.75rem;">
+                <span class="admin-badge admin-badge-info">{{ users|length }} Total Users</span>
+            </div>
+        </div>
+
+        <div class="admin-card">
+            <div class="admin-card-header">
+                <h3 class="admin-card-title">All Users</h3>
+            </div>
+            <div style="overflow-x: auto;">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Avatar</th>
+                            <th>Username</th>
+                            <th>Email</th>
+                            <th>Joined</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for user in users %}
+                        <tr>
+                            <td>#{{ user.id }}</td>
+                            <td>
+                                <div class="admin-avatar-sm">{{ user.username|first|upper }}</div>
+                            </td>
+                            <td><strong>{{ user.username }}</strong></td>
+                            <td>{{ user.email|default:"—" }}</td>
+                            <td>{{ user.date_joined|date:"M d, Y" }}</td>
+                            <td>
+                                <span class="admin-badge {% if user.is_active %}admin-badge-active{% else %}admin-badge-blocked{% endif %}">
+                                    {% if user.is_active %}Active{% else %}Inactive{% endif %}
+                                </span>
+                            </td>
+                            <td>
+                                <div style="display: flex; gap: 0.5rem;">
+                                    <a href="{% url 'admin_dashboard' %}" class="admin-btn admin-btn-secondary admin-btn-sm" title="View">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                    <a href="#" class="admin-btn admin-btn-danger admin-btn-sm" title="Delete">
+                                        <i class="fas fa-trash"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="7" class="admin-empty-state">
+                                <i class="fas fa-users"></i>
+                                <p>No users found</p>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script>
+    gsap.from('.admin-card', {
+        opacity: 0,
+        y: 20,
+        duration: 0.6,
+        ease: 'power3.out'
+    });
+</script>
+{% endblock %}

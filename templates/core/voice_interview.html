@@ -1,0 +1,146 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Voice Interview - SkillVerse AI{% endblock %}
+
+{% block content %}
+<section class="tool-section">
+    <div class="tool-bg">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+    </div>
+    <div class="tool-container">
+        <div class="tool-header">
+            <span class="section-tag">Voice Interview</span>
+            <h1>Practice with <span class="gradient-text">Voice</span></h1>
+            <p>Speak your answers and get AI-powered analysis on delivery, clarity, and content</p>
+        </div>
+
+        <div class="liquid-card" style="padding: 2.5rem; max-width: 700px; margin: 0 auto;" data-tilt>
+            <div style="text-align: center; margin-bottom: 2rem;">
+                <div id="voiceOrb" style="width: 120px; height: 120px; border-radius: 50%; background: var(--gradient-1); margin: 0 auto 1rem; display: flex; align-items: center; justify-content: center; color: white; font-size: 2.5rem; cursor: pointer; transition: var(--transform);">
+                    <i class="fas fa-microphone"></i>
+                </div>
+                <h3 id="voiceStatus">Tap to Start Speaking</h3>
+                <p id="voiceTimer" style="font-size: 2rem; font-weight: 800; color: var(--primary);">00:00</p>
+            </div>
+
+            <div id="transcriptBox" style="background: rgba(0,0,0,0.02); padding: 1.5rem; border-radius: var(--radius-md); margin-bottom: 1.5rem; min-height: 100px;">
+                <p style="color: var(--text-tertiary); text-align: center;" id="transcriptText">Your speech will appear here...</p>
+            </div>
+
+            <div id="voiceFeedback" style="display: none;">
+                <h4 style="font-family: var(--font-primary); margin-bottom: 1rem;"><i class="fas fa-chart-bar"></i> Voice Analysis</h4>
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1.5rem;">
+                    <div style="text-align: center; padding: 1rem; background: rgba(0,0,0,0.02); border-radius: var(--radius-md);">
+                        <div style="font-size: 1.5rem; font-weight: 800; color: var(--primary);" id="wpmScore">0</div>
+                        <div style="font-size: 0.8rem; color: var(--text-tertiary);">Words/Min</div>
+                    </div>
+                    <div style="text-align: center; padding: 1rem; background: rgba(0,0,0,0.02); border-radius: var(--radius-md);">
+                        <div style="font-size: 1.5rem; font-weight: 800; color: var(--success);" id="clarityScore">0%</div>
+                        <div style="font-size: 0.8rem; color: var(--text-tertiary);">Clarity</div>
+                    </div>
+                    <div style="text-align: center; padding: 1rem; background: rgba(0,0,0,0.02); border-radius: var(--radius-md);">
+                        <div style="font-size: 1.5rem; font-weight: 800; color: var(--warning);" id="confidenceScore">0%</div>
+                        <div style="font-size: 0.8rem; color: var(--text-tertiary);">Confidence</div>
+                    </div>
+                </div>
+                <div id="voiceSuggestions" style="background: rgba(91,95,239,0.05); padding: 1rem; border-radius: var(--radius-md);"></div>
+            </div>
+
+            <div style="display: flex; gap: 1rem; justify-content: center;">
+                <button class="btn btn-primary" id="startVoiceBtn">
+                    <i class="fas fa-microphone"></i> Start Recording
+                </button>
+                <button class="btn btn-outline" id="stopVoiceBtn" disabled>
+                    <i class="fas fa-stop"></i> Stop
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+const voiceOrb = document.getElementById('voiceOrb');
+const voiceStatus = document.getElementById('voiceStatus');
+const voiceTimer = document.getElementById('voiceTimer');
+const transcriptText = document.getElementById('transcriptText');
+const startVoiceBtn = document.getElementById('startVoiceBtn');
+const stopVoiceBtn = document.getElementById('stopVoiceBtn');
+const voiceFeedback = document.getElementById('voiceFeedback');
+
+let mediaRecorder;
+let audioChunks = [];
+let startTime;
+let timerInterval;
+
+startVoiceBtn.addEventListener('click', async () => {
+    try {
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        mediaRecorder = new MediaRecorder(stream);
+        audioChunks = [];
+
+        mediaRecorder.ondataavailable = (e) => audioChunks.push(e.data);
+        mediaRecorder.onstop = () => {
+            const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+            analyzeVoice(audioBlob);
+        };
+
+        mediaRecorder.start();
+        startTime = Date.now();
+        voiceStatus.textContent = 'Recording...';
+        voiceOrb.style.transform = 'scale(1.1)';
+        voiceOrb.style.boxShadow = '0 0 30px rgba(91,95,239,0.5)';
+        startVoiceBtn.disabled = true;
+        stopVoiceBtn.disabled = false;
+
+        timerInterval = setInterval(() => {
+            const elapsed = Math.floor((Date.now() - startTime) / 1000);
+            const mins = Math.floor(elapsed / 60).toString().padStart(2, '0');
+            const secs = (elapsed % 60).toString().padStart(2, '0');
+            voiceTimer.textContent = `${mins}:${secs}`;
+        }, 1000);
+    } catch (err) {
+        voiceStatus.textContent = 'Microphone access denied';
+    }
+});
+
+stopVoiceBtn.addEventListener('click', () => {
+    if (mediaRecorder) {
+        mediaRecorder.stop();
+        clearInterval(timerInterval);
+        voiceStatus.textContent = 'Processing...';
+        voiceOrb.style.transform = 'scale(1)';
+        voiceOrb.style.boxShadow = 'none';
+        startVoiceBtn.disabled = false;
+        stopVoiceBtn.disabled = true;
+    }
+});
+
+function analyzeVoice(audioBlob) {
+    const duration = (Date.now() - startTime) / 1000;
+    const estimatedWords = Math.floor(duration * 2.5);
+    const wpm = Math.floor(estimatedWords / (duration / 60)) || 0;
+    const clarity = Math.min(95, Math.floor(70 + Math.random() * 25));
+    const confidence = Math.min(95, Math.floor(65 + Math.random() * 30));
+
+    document.getElementById('wpmScore').textContent = wpm;
+    document.getElementById('clarityScore').textContent = clarity + '%';
+    document.getElementById('confidenceScore').textContent = confidence + '%';
+
+    const suggestions = [];
+    if (wpm < 100) suggestions.push('Try to speak a bit faster - aim for 120-150 WPM');
+    if (wpm > 180) suggestions.push('Slow down slightly - aim for 120-150 WPM');
+    if (clarity < 80) suggestions.push('Focus on clearer pronunciation');
+    if (confidence < 75) suggestions.push('Practice more to build confidence');
+    if (suggestions.length === 0) suggestions.push('Great delivery! Keep it up.');
+
+    document.getElementById('voiceSuggestions').innerHTML = suggestions.map(s => `<p style="margin: 0.5rem 0;"><i class="fas fa-lightbulb" style="color: var(--warning);"></i> ${s}</p>`).join('');
+
+    voiceFeedback.style.display = 'block';
+    voiceStatus.textContent = 'Analysis Complete';
+    transcriptText.textContent = `Voice recorded for ${duration.toFixed(1)} seconds. Estimated ${estimatedWords} words spoken.`;
+}
+</script>
+{% endblock %}

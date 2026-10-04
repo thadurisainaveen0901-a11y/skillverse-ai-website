@@ -1,0 +1,96 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Press - SkillVerse AI{% endblock %}
+
+{% block content %}
+<section class="page-section">
+    <div class="page-bg">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+    </div>
+    <div class="page-container">
+        <div class="page-header">
+            <span class="section-tag">Press</span>
+            <h1>Media & <span class="gradient-text">Press</span></h1>
+            <p>News, press releases, and media resources</p>
+        </div>
+
+        <!-- Press Releases -->
+        <div class="liquid-card" style="padding: 3rem; margin-bottom: 3rem;" data-tilt>
+            <h2 style="font-family: var(--font-primary); font-size: 2rem; margin-bottom: 2rem; text-align: center;">Press <span class="gradient-text">Releases</span></h2>
+            <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                <div style="padding: 1.5rem; background: rgba(0,0,0,0.02); border-radius: var(--radius-md);">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem;">
+                        <h3 style="font-family: var(--font-primary); font-size: 1.1rem;">SkillVerse AI Raises $2M Seed Round</h3>
+                        <span style="color: var(--text-tertiary); font-size: 0.85rem; white-space: nowrap; margin-left: 1rem;">Oct 1, 2024</span>
+                    </div>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem;">Funding to expand AI-powered career preparation platform for students worldwide.</p>
+                </div>
+                <div style="padding: 1.5rem; background: rgba(0,0,0,0.02); border-radius: var(--radius-md);">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem;">
+                        <h3 style="font-family: var(--font-primary); font-size: 1.1rem;">SkillVerse AI Reaches 10,000 Students Milestone</h3>
+                        <span style="color: var(--text-tertiary); font-size: 0.85rem; white-space: nowrap; margin-left: 1rem;">Sep 15, 2024</span>
+                    </div>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem;">Platform celebrates major milestone in student career preparation.</p>
+                </div>
+                <div style="padding: 1.5rem; background: rgba(0,0,0,0.02); border-radius: var(--radius-md);">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem;">
+                        <h3 style="font-family: var(--font-primary); font-size: 1.1rem;">New AI Interview Practice Feature Launches</h3>
+                        <span style="color: var(--text-tertiary); font-size: 0.85rem; white-space: nowrap; margin-left: 1rem;">Aug 20, 2024</span>
+                    </div>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem;">Revolutionary AI-powered interview practice now available to all users.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Media Coverage -->
+        <div class="liquid-card" style="padding: 3rem; margin-bottom: 3rem;" data-tilt>
+            <h2 style="font-family: var(--font-primary); font-size: 2rem; margin-bottom: 2rem; text-align: center;">Media <span class="gradient-text">Coverage</span></h2>
+            <div class="features-grid" style="margin-bottom: 0;">
+                <div class="feature-card" data-tilt>
+                    <div class="feature-icon"><i class="fas fa-newspaper"></i></div>
+                    <h3 class="feature-title">TechCrunch</h3>
+                    <p class="feature-desc">"SkillVerse AI is revolutionizing how students prepare for their careers."</p>
+                </div>
+                <div class="feature-card" data-tilt>
+                    <div class="feature-icon"><i class="fas fa-laptop"></i></div>
+                    <h3 class="feature-title">The Verge</h3>
+                    <p class="feature-desc">"The future of career preparation is here with AI-powered tools."</p>
+                </div>
+                <div class="feature-card" data-tilt>
+                    <div class="feature-icon"><i class="fas fa-graduation-cap"></i></div>
+                    <h3 class="feature-title">EdTech Magazine</h3>
+                    <p class="feature-desc">"Students using SkillVerse AI are 3x more likely to land interviews."</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Media Resources -->
+        <div class="liquid-card" style="padding: 3rem;" data-tilt>
+            <h2 style="font-family: var(--font-primary); font-size: 2rem; margin-bottom: 2rem; text-align: center;">Media <span class="gradient-text">Resources</span></h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem;">
+                <div style="text-align: center; padding: 1.5rem; background: rgba(0,0,0,0.02); border-radius: var(--radius-md);">
+                    <i class="fas fa-image" style="font-size: 2rem; color: var(--primary); margin-bottom: 0.5rem;"></i>
+                    <h4 style="font-weight: 600; margin-bottom: 0.25rem;">Logo & Brand</h4>
+                    <p style="color: var(--text-tertiary); font-size: 0.85rem;">Download our logo and brand assets</p>
+                </div>
+                <div style="text-align: center; padding: 1.5rem; background: rgba(0,0,0,0.02); border-radius: var(--radius-md);">
+                    <i class="fas fa-screenshot" style="font-size: 2rem; color: var(--primary); margin-bottom: 0.5rem;"></i>
+                    <h4 style="font-weight: 600; margin-bottom: 0.25rem;">Screenshots</h4>
+                    <p style="color: var(--text-tertiary); font-size: 0.85rem;">High-quality product screenshots</p>
+                </div>
+                <div style="text-align: center; padding: 1.5rem; background: rgba(0,0,0,0.02); border-radius: var(--radius-md);">
+                    <i class="fas fa-video" style="font-size: 2rem; color: var(--primary); margin-bottom: 0.5rem;"></i>
+                    <h4 style="font-weight: 600; margin-bottom: 0.25rem;">Demo Video</h4>
+                    <p style="color: var(--text-tertiary); font-size: 0.85rem;">Watch our product demo</p>
+                </div>
+                <div style="text-align: center; padding: 1.5rem; background: rgba(0,0,0,0.02); border-radius: var(--radius-md);">
+                    <i class="fas fa-file-pdf" style="font-size: 2rem; color: var(--primary); margin-bottom: 0.5rem;"></i>
+                    <h4 style="font-weight: 600; margin-bottom: 0.25rem;">Press Kit</h4>
+                    <p style="color: var(--text-tertiary); font-size: 0.85rem;">Complete press kit download</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

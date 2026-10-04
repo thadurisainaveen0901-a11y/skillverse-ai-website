@@ -1,0 +1,369 @@
+{% extends 'core/base.html' %}
+
+{% block title %}SkillVerse AI - Build Skills. Practice Interviews. Become Job-Ready.{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero" id="hero">
+    <div class="hero-bg">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+        <div class="gradient-orb orb-3"></div>
+        <div class="grid-overlay"></div>
+    </div>
+    <div class="hero-container">
+        <div class="hero-content">
+            <div class="hero-badge" id="heroBadge">
+                <span class="badge-dot"></span>
+                <span>AI-Powered Career Platform</span>
+            </div>
+            <h1 class="hero-title" id="heroTitle">
+                <span class="title-line">Build Skills.</span>
+                <span class="title-line">Practice Interviews.</span>
+                <span class="title-line gradient-text">Become Job-Ready.</span>
+            </h1>
+            <p class="hero-subtitle" id="heroSubtitle">
+                The all-in-one platform for students to analyze resumes, understand ATS compatibility,
+                identify skill gaps, practice technical interviews, and track performance with AI-powered insights.
+            </p>
+            <div class="hero-actions" id="heroActions">
+                <a href="/register/" class="btn btn-primary btn-lg">
+                    <span>Get Started Free</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+                <a href="/features/" class="btn btn-outline btn-lg">
+                    <i class="fas fa-play"></i>
+                    <span>Explore Features</span>
+                </a>
+            </div>
+            <div class="hero-stats" id="heroStats">
+                <div class="stat-item">
+                    <span class="stat-number" data-count="10000">0</span>
+                    <span class="stat-label">Students</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" data-count="500">0</span>
+                    <span class="stat-label">Companies</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" data-count="95">0</span>
+                    <span class="stat-label">% Success Rate</span>
+                </div>
+            </div>
+        </div>
+        <div class="hero-visual" id="heroVisual">
+            <div class="floating-card card-1">
+                <div class="card-icon"><i class="fas fa-file-alt"></i></div>
+                <div class="card-content">
+                    <span class="card-title">Resume Score</span>
+                    <span class="card-value">87/100</span>
+                </div>
+                <div class="card-progress">
+                    <div class="progress-bar" style="width: 87%"></div>
+                </div>
+            </div>
+            <div class="floating-card card-2">
+                <div class="card-icon"><i class="fas fa-code"></i></div>
+                <div class="card-content">
+                    <span class="card-title">Interview Ready</span>
+                    <span class="card-value">Python Dev</span>
+                </div>
+            </div>
+            <div class="floating-card card-3">
+                <div class="card-icon"><i class="fas fa-chart-line"></i></div>
+                <div class="card-content">
+                    <span class="card-title">Skills Matched</span>
+                    <span class="card-value">12/15</span>
+                </div>
+            </div>
+            <div class="floating-card card-4">
+                <div class="card-icon"><i class="fas fa-trophy"></i></div>
+                <div class="card-content">
+                    <span class="card-title">Top 5%</span>
+                    <span class="card-value">Rank</span>
+                </div>
+            </div>
+            <div class="main-visual-card">
+                <div class="visual-header">
+                    <div class="visual-dots">
+                        <span></span><span></span><span></span>
+                    </div>
+                    <span class="visual-title">SkillVerse Dashboard</span>
+                </div>
+                <div class="visual-content">
+                    <div class="visual-chart">
+                        <div class="chart-bar" style="height: 40%"></div>
+                        <div class="chart-bar" style="height: 65%"></div>
+                        <div class="chart-bar" style="height: 45%"></div>
+                        <div class="chart-bar" style="height: 80%"></div>
+                        <div class="chart-bar" style="height: 55%"></div>
+                        <div class="chart-bar" style="height: 90%"></div>
+                        <div class="chart-bar" style="height: 70%"></div>
+                    </div>
+                    <div class="visual-metrics">
+                        <div class="metric">
+                            <span class="metric-label">ATS Score</span>
+                            <span class="metric-value">87%</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Skills</span>
+                            <span class="metric-value">24</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Interviews</span>
+                            <span class="metric-value">12</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="scroll-indicator">
+        <span>Scroll to explore</span>
+        <div class="scroll-arrow">
+            <i class="fas fa-chevron-down"></i>
+        </div>
+    </div>
+</section>
+
+<!-- Trusted By Section -->
+<section class="features" style="padding: 4rem 2rem;">
+    <div class="section-container">
+        <div class="section-header">
+            <span class="section-tag">Trusted By</span>
+            <h2 class="section-title" style="font-size: 1.75rem;">Leading Companies Hire Our Students</h2>
+        </div>
+        <div style="display: flex; justify-content: center; align-items: center; gap: 4rem; flex-wrap: wrap; opacity: 0.5;">
+            <span style="font-size: 1.5rem; font-weight: 700; color: var(--text-tertiary);">Google</span>
+            <span style="font-size: 1.5rem; font-weight: 700; color: var(--text-tertiary);">Microsoft</span>
+            <span style="font-size: 1.5rem; font-weight: 700; color: var(--text-tertiary);">Amazon</span>
+            <span style="font-size: 1.5rem; font-weight: 700; color: var(--text-tertiary);">Meta</span>
+            <span style="font-size: 1.5rem; font-weight: 700; color: var(--text-tertiary);">Apple</span>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="features" id="features">
+    <div class="section-container">
+        <div class="section-header" id="featuresHeader">
+            <span class="section-tag">Features</span>
+            <h2 class="section-title">Everything You Need to <span class="gradient-text">Succeed</span></h2>
+            <p class="section-subtitle">Powerful AI-driven tools designed to help you land your dream job with confidence</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card" data-tilt>
+                <div class="feature-icon"><i class="fas fa-file-alt"></i></div>
+                <h3 class="feature-title">Resume Analyzer</h3>
+                <p class="feature-desc">Upload your resume and get instant ATS scoring with detailed feedback on every section.</p>
+                <ul class="feature-list">
+                    <li><i class="fas fa-check"></i> PDF, DOCX, TXT support</li>
+                    <li><i class="fas fa-check"></i> Instant ATS scoring</li>
+                    <li><i class="fas fa-check"></i> Section-by-section analysis</li>
+                    <li><i class="fas fa-check"></i> Keyword optimization tips</li>
+                </ul>
+                <a href="/resume/" class="feature-link"><span>Try it now</span><i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="feature-card" data-tilt>
+                <div class="feature-icon"><i class="fas fa-brain"></i></div>
+                <h3 class="feature-title">AI Interview Prep</h3>
+                <p class="feature-desc">Practice with AI-powered questions tailored to your target role and get instant feedback.</p>
+                <ul class="feature-list">
+                    <li><i class="fas fa-check"></i> Role-specific questions</li>
+                    <li><i class="fas fa-check"></i> Instant answer evaluation</li>
+                    <li><i class="fas fa-check"></i> Detailed feedback</li>
+                    <li><i class="fas fa-check"></i> Progress tracking</li>
+                </ul>
+                <a href="/interview/" class="feature-link"><span>Practice now</span><i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="feature-card" data-tilt>
+                <div class="feature-icon"><i class="fas fa-bullseye"></i></div>
+                <h3 class="feature-title">Job Matching</h3>
+                <p class="feature-desc">Match your skills against job descriptions and identify skill gaps to target.</p>
+                <ul class="feature-list">
+                    <li><i class="fas fa-check"></i> Keyword-based matching</li>
+                    <li><i class="fas fa-check"></i> Skill gap identification</li>
+                    <li><i class="fas fa-check"></i> 5+ role definitions</li>
+                    <li><i class="fas fa-check"></i> Custom improvement plans</li>
+                </ul>
+                <a href="/resume/" class="feature-link"><span>Learn more</span><i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="feature-card" data-tilt>
+                <div class="feature-icon"><i class="fas fa-chart-line"></i></div>
+                <h3 class="feature-title">Performance Tracking</h3>
+                <p class="feature-desc">Track your interview performance with detailed analytics and progress insights.</p>
+                <ul class="feature-list">
+                    <li><i class="fas fa-check"></i> Interview history</li>
+                    <li><i class="fas fa-check"></i> Average & highest scores</li>
+                    <li><i class="fas fa-check"></i> Progress over time</li>
+                    <li><i class="fas fa-check"></i> Improvement suggestions</li>
+                </ul>
+                <a href="/dashboard/" class="feature-link"><span>View dashboard</span><i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="feature-card" data-tilt>
+                <div class="feature-icon"><i class="fas fa-file-pdf"></i></div>
+                <h3 class="feature-title">PDF Reports</h3>
+                <p class="feature-desc">Generate beautiful PDF reports of your resume analysis to share with mentors.</p>
+                <ul class="feature-list">
+                    <li><i class="fas fa-check"></i> Professional layout</li>
+                    <li><i class="fas fa-check"></i> ATS score breakdown</li>
+                    <li><i class="fas fa-check"></i> Strengths & suggestions</li>
+                    <li><i class="fas fa-check"></i> Shareable format</li>
+                </ul>
+                <a href="/resume/" class="feature-link"><span>Generate report</span><i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="feature-card" data-tilt>
+                <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
+                <h3 class="feature-title">Secure &amp; Private</h3>
+                <p class="feature-desc">Your data is encrypted and never shared with anyone. Enterprise-grade security.</p>
+                <ul class="feature-list">
+                    <li><i class="fas fa-check"></i> JWT authentication</li>
+                    <li><i class="fas fa-check"></i> Encrypted storage</li>
+                    <li><i class="fas fa-check"></i> No data sharing</li>
+                    <li><i class="fas fa-check"></i> GDPR compliant</li>
+                </ul>
+                <a href="/settings/" class="feature-link"><span>Learn more</span><i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- How It Works Section -->
+<section class="features" style="padding-top: 0;">
+    <div class="section-container">
+        <div class="section-header">
+            <span class="section-tag">How It Works</span>
+            <h2 class="section-title">Three Simple Steps to <span class="gradient-text">Success</span></h2>
+            <p class="section-subtitle">Get started in minutes and land your dream job with AI-powered guidance</p>
+        </div>
+        <div class="features-grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
+            <div class="feature-card" data-tilt style="text-align: center;">
+                <div class="feature-icon" style="margin: 0 auto 1.5rem;"><i class="fas fa-cloud-upload-alt"></i></div>
+                <h3 class="feature-title">1. Upload Resume</h3>
+                <p class="feature-desc">Upload your resume in PDF, DOCX, or TXT format. Our AI will analyze it instantly.</p>
+            </div>
+            <div class="feature-card" data-tilt style="text-align: center;">
+                <div class="feature-icon" style="margin: 0 auto 1.5rem;"><i class="fas fa-brain"></i></div>
+                <h3 class="feature-title">2. Get AI Analysis</h3>
+                <p class="feature-desc">Receive instant ATS scoring, keyword analysis, and personalized improvement suggestions.</p>
+            </div>
+            <div class="feature-card" data-tilt style="text-align: center;">
+                <div class="feature-icon" style="margin: 0 auto 1.5rem;"><i class="fas fa-briefcase"></i></div>
+                <h3 class="feature-title">3. Land Your Job</h3>
+                <p class="feature-desc">Apply with confidence knowing your resume is optimized and you're interview-ready.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials Section -->
+<section class="features" style="padding-top: 0;">
+    <div class="section-container">
+        <div class="section-header">
+            <span class="section-tag">Testimonials</span>
+            <h2 class="section-title">What Our <span class="gradient-text">Students Say</span></h2>
+            <p class="section-subtitle">Join thousands of students who have already landed their dream jobs</p>
+        </div>
+        <div class="features-grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
+            <div class="liquid-card" data-tilt style="padding: 2rem;">
+                <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                    <div style="width: 50px; height: 50px; border-radius: 50%; background: var(--gradient-1); display: flex; align-items: center; justify-content: center; color: white; font-weight: 700;">S</div>
+                    <div>
+                        <h4 style="font-weight: 700;">Sarah Johnson</h4>
+                        <p style="font-size: 0.85rem; color: var(--text-tertiary);">Software Engineer @ Google</p>
+                    </div>
+                </div>
+                <p style="color: var(--text-secondary); font-style: italic;">"SkillVerse AI helped me optimize my resume and practice interviews. I landed my dream job at Google!"</p>
+                <div style="color: var(--warning); margin-top: 1rem;">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                </div>
+            </div>
+            <div class="liquid-card" data-tilt style="padding: 2rem;">
+                <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                    <div style="width: 50px; height: 50px; border-radius: 50%; background: var(--gradient-2); display: flex; align-items: center; justify-content: center; color: white; font-weight: 700;">M</div>
+                    <div>
+                        <h4 style="font-weight: 700;">Michael Chen</h4>
+                        <p style="font-size: 0.85rem; color: var(--text-tertiary);">Data Scientist @ Amazon</p>
+                    </div>
+                </div>
+                <p style="color: var(--text-secondary); font-style: italic;">"The ATS scoring was incredibly accurate. I knew exactly what to fix in my resume before applying."</p>
+                <div style="color: var(--warning); margin-top: 1rem;">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                </div>
+            </div>
+            <div class="liquid-card" data-tilt style="padding: 2rem;">
+                <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                    <div style="width: 50px; height: 50px; border-radius: 50%; background: var(--gradient-4); display: flex; align-items: center; justify-content: center; color: white; font-weight: 700;">E</div>
+                    <div>
+                        <h4 style="font-weight: 700;">Emily Rodriguez</h4>
+                        <p style="font-size: 0.85rem; color: var(--text-tertiary);">Product Manager @ Meta</p>
+                    </div>
+                </div>
+                <p style="color: var(--text-secondary); font-style: italic;">"The interview practice was a game-changer. I felt so confident during my actual interviews!"</p>
+                <div style="color: var(--warning); margin-top: 1rem;">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Stats Section -->
+<section class="features" style="padding-top: 0;">
+    <div class="section-container">
+        <div class="section-header">
+            <span class="section-tag">Our Impact</span>
+            <h2 class="section-title">Numbers That <span class="gradient-text">Speak</span></h2>
+        </div>
+        <div class="stats-grid" style="margin-bottom: 0;">
+            <div class="stat-card" data-tilt>
+                <div class="stat-icon"><i class="fas fa-users"></i></div>
+                <div class="stat-info">
+                    <span class="stat-value" data-count="10000">0</span>
+                    <span class="stat-label">Active Students</span>
+                </div>
+            </div>
+            <div class="stat-card" data-tilt>
+                <div class="stat-icon"><i class="fas fa-file-alt"></i></div>
+                <div class="stat-info">
+                    <span class="stat-value" data-count="50000">0</span>
+                    <span class="stat-label">Resumes Analyzed</span>
+                </div>
+            </div>
+            <div class="stat-card" data-tilt>
+                <div class="stat-icon"><i class="fas fa-code"></i></div>
+                <div class="stat-info">
+                    <span class="stat-value" data-count="25000">0</span>
+                    <span class="stat-label">Interviews Practiced</span>
+                </div>
+            </div>
+            <div class="stat-card" data-tilt>
+                <div class="stat-icon"><i class="fas fa-trophy"></i></div>
+                <div class="stat-info">
+                    <span class="stat-value" data-count="95">0</span>
+                    <span class="stat-label">% Success Rate</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="features" style="padding-top: 0;">
+    <div class="section-container">
+        <div class="liquid-card" style="text-align: center; padding: 4rem 2rem;">
+            <h2 class="section-title" style="font-size: 2.5rem; margin-bottom: 1rem;">Ready to <span class="gradient-text">Transform</span> Your Career?</h2>
+            <p class="section-subtitle" style="margin-bottom: 2rem;">Join thousands of students who have already landed their dream jobs with SkillVerse AI.</p>
+            <div class="hero-actions" style="justify-content: center; margin-bottom: 0;">
+                <a href="/register/" class="btn btn-primary btn-lg">
+                    <span>Get Started Free</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+                <a href="/login/" class="btn btn-outline btn-lg">
+                    <span>Sign In</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

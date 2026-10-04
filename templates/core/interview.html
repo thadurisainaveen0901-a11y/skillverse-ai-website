@@ -1,0 +1,297 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Interview Practice - SkillVerse AI{% endblock %}
+
+{% block content %}
+<section class="tool-section">
+    <div class="tool-bg">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+    </div>
+    <div class="tool-container">
+        <div class="tool-header">
+            <span class="section-tag">Interview Practice</span>
+            <h1>Practice Makes Perfect</h1>
+            <p>Answer questions manually and get personalized AI feedback based on your responses</p>
+        </div>
+
+        <div class="interview-setup" id="interviewSetup">
+            <div class="setup-card" data-tilt>
+                <h3>Choose Your Role</h3>
+                <div class="role-grid" id="roleGrid">
+                    <div class="role-card" data-role="python_developer"><i class="fab fa-python"></i><span>Python Developer</span></div>
+                    <div class="role-card" data-role="javascript_developer"><i class="fab fa-js"></i><span>JavaScript Developer</span></div>
+                    <div class="role-card" data-role="data_scientist"><i class="fas fa-chart-bar"></i><span>Data Scientist</span></div>
+                    <div class="role-card" data-role="devops_engineer"><i class="fas fa-server"></i><span>DevOps Engineer</span></div>
+                    <div class="role-card" data-role="fullstack_developer"><i class="fas fa-laptop-code"></i><span>Full Stack Developer</span></div>
+                    <div class="role-card" data-role="general"><i class="fas fa-briefcase"></i><span>General</span></div>
+                </div>
+                <button class="btn btn-primary btn-lg" id="startInterviewBtn" disabled>
+                    <i class="fas fa-play"></i> Start Interview
+                </button>
+            </div>
+        </div>
+
+        <div class="interview-session" id="interviewSession" style="display:none;">
+            <div class="interview-header">
+                <div class="interview-info">
+                    <span class="interview-role" id="currentRole">Python Developer</span>
+                    <span class="interview-progress" id="questionProgress">Question 1/5</span>
+                </div>
+                <button class="btn btn-sm btn-outline" id="endInterviewBtn">
+                    <i class="fas fa-stop"></i> End Session
+                </button>
+            </div>
+            <div class="question-card" id="questionCard" data-tilt>
+                <div class="question-number" id="questionNumber">Q1</div>
+                <h3 class="question-text" id="questionText">Loading question...</h3>
+                <div class="answer-area">
+                    <textarea id="answerInput" placeholder="Type your answer here..." rows="6"></textarea>
+                    <div class="answer-actions">
+                        <span class="char-count" id="charCount">0 characters</span>
+                        <button class="btn btn-primary" id="submitAnswerBtn">
+                            <i class="fas fa-paper-plane"></i> Submit Answer
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="feedback-card" id="feedbackCard" style="display:none;" data-tilt>
+                <div class="feedback-header">
+                    <h4><i class="fas fa-star"></i> Personalized Feedback</h4>
+                    <span class="feedback-score" id="feedbackScore">0/10</span>
+                </div>
+                <div class="feedback-content" id="feedbackContent"></div>
+                <button class="btn btn-primary" id="nextQuestionBtn">
+                    <i class="fas fa-arrow-right"></i> Next Question
+                </button>
+            </div>
+        </div>
+
+        <div class="interview-summary" id="interviewSummary" style="display:none;">
+            <div class="summary-card" data-tilt>
+                <div class="summary-header">
+                    <h3><i class="fas fa-trophy"></i> Interview Complete!</h3>
+                    <p>Here's how you performed based on your answers</p>
+                </div>
+                <div class="summary-score">
+                    <div class="summary-score-circle">
+                        <span class="summary-score-number" id="summaryScore">0</span>
+                        <span class="summary-score-label">Average Score</span>
+                    </div>
+                    <div class="summary-details">
+                        <div class="summary-item">
+                            <span class="summary-label">Total Questions</span>
+                            <span class="summary-value" id="totalQuestions">0</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="summary-label">Highest Score</span>
+                            <span class="summary-value" id="highestScore">0</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="summary-label">Lowest Score</span>
+                            <span class="summary-value" id="lowestScore">0</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="summary-actions">
+                    <button class="btn btn-primary" id="retryBtn">
+                        <i class="fas fa-redo"></i> Try Again
+                    </button>
+                    <a href="/dashboard/" class="btn btn-outline">
+                        <i class="fas fa-home"></i> Dashboard
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Interview Tips Section -->
+        <div class="liquid-card" style="margin-top: 2.5rem; padding: 2.5rem;" data-tilt>
+            <h3 style="font-family: var(--font-primary); margin-bottom: 1.5rem;"><i class="fas fa-lightbulb"></i> Interview Tips</h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem;">
+                <div style="display: flex; gap: 1rem; padding: 1rem; background: rgba(0,0,0,0.02); border-radius: var(--radius-md);">
+                    <div style="width: 40px; height: 40px; border-radius: 10px; background: var(--gradient-1); display: flex; align-items: center; justify-content: center; color: white; flex-shrink: 0;">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div>
+                        <h4 style="font-weight: 600; font-size: 0.95rem;">Be Concise</h4>
+                        <p style="font-size: 0.85rem; color: var(--text-secondary);">Keep answers under 2 minutes. Focus on key points and examples.</p>
+                    </div>
+                </div>
+                <div style="display: flex; gap: 1rem; padding: 1rem; background: rgba(0,0,0,0.02); border-radius: var(--radius-md);">
+                    <div style="width: 40px; height: 40px; border-radius: 10px; background: var(--gradient-2); display: flex; align-items: center; justify-content: center; color: white; flex-shrink: 0;">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div>
+                        <h4 style="font-weight: 600; font-size: 0.95rem;">Use STAR Method</h4>
+                        <p style="font-size: 0.85rem; color: var(--text-secondary);">Structure answers: Situation, Task, Action, Result</p>
+                    </div>
+                </div>
+                <div style="display: flex; gap: 1rem; padding: 1rem; background: rgba(0,0,0,0.02); border-radius: var(--radius-md);">
+                    <div style="width: 40px; height: 40px; border-radius: 10px; background: var(--gradient-4); display: flex; align-items: center; justify-content: center; color: white; flex-shrink: 0;">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <div>
+                        <h4 style="font-weight: 600; font-size: 0.95rem;">Show Your Work</h4>
+                        <p style="font-size: 0.85rem; color: var(--text-secondary);">Reference specific projects and technologies you've used</p>
+                    </div>
+                </div>
+                <div style="display: flex; gap: 1rem; padding: 1rem; background: rgba(0,0,0,0.02); border-radius: var(--radius-md);">
+                    <div style="width: 40px; height: 40px; border-radius: 10px; background: var(--gradient-3); display: flex; align-items: center; justify-content: center; color: white; flex-shrink: 0;">
+                        <i class="fas fa-question"></i>
+                    </div>
+                    <div>
+                        <h4 style="font-weight: 600; font-size: 0.95rem;">Ask Questions</h4>
+                        <p style="font-size: 0.85rem; color: var(--text-secondary);">Prepare thoughtful questions to ask the interviewer</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+let selectedRole = '', currentQuestion = 0, totalQuestions = 5, scores = [], questions = [], userAnswers = [];
+const roleCards = document.querySelectorAll('.role-card');
+const startBtn = document.getElementById('startInterviewBtn');
+const interviewSetup = document.getElementById('interviewSetup');
+const interviewSession = document.getElementById('interviewSession');
+const interviewSummary = document.getElementById('interviewSummary');
+
+roleCards.forEach(card => {
+    card.addEventListener('click', () => {
+        roleCards.forEach(c => c.classList.remove('selected'));
+        card.classList.add('selected');
+        selectedRole = card.dataset.role;
+        startBtn.disabled = false;
+    });
+});
+
+startBtn.addEventListener('click', startInterview);
+document.getElementById('endInterviewBtn').addEventListener('click', endInterview);
+document.getElementById('submitAnswerBtn').addEventListener('click', submitAnswer);
+document.getElementById('nextQuestionBtn').addEventListener('click', nextQuestion);
+document.getElementById('retryBtn').addEventListener('click', () => { interviewSummary.style.display = 'none'; interviewSetup.style.display = 'block'; });
+
+const answerInput = document.getElementById('answerInput');
+answerInput.addEventListener('input', () => { document.getElementById('charCount').textContent = answerInput.value.length + ' characters'; });
+
+function startInterview() {
+    interviewSetup.style.display = 'none';
+    interviewSession.style.display = 'block';
+    currentQuestion = 0; scores = []; userAnswers = [];
+    questions = generateQuestions(selectedRole);
+    showQuestion();
+}
+
+function generateQuestions(role) {
+    const bank = {
+        python_developer: ['Explain the difference between a list and a tuple in Python.', 'What is a decorator in Python? Provide an example.', 'How does Python handle memory management?', 'Explain the GIL (Global Interpreter Lock) in Python.', 'What are Python generators and how are they different from iterators?'],
+        javascript_developer: ['Explain the difference between let, const, and var.', 'What is the event loop in JavaScript?', 'Explain closures in JavaScript with an example.', 'What is the difference between == and === in JavaScript?', 'How does prototypal inheritance work in JavaScript?'],
+        data_scientist: ['What is the difference between supervised and unsupervised learning?', 'Explain the bias-variance tradeoff.', 'How do you handle missing data in a dataset?', 'What is cross-validation and why is it important?', 'Explain the difference between L1 and L2 regularization.'],
+        devops_engineer: ['What is CI/CD and why is it important?', 'Explain the difference between Docker and Kubernetes.', 'What is Infrastructure as Code (IaC)?', 'How do you monitor a production system?', 'Explain blue-green deployment strategy.'],
+        fullstack_developer: ['Explain the difference between SQL and NoSQL databases.', 'What is RESTful API design?', 'How do you handle authentication in a web application?', 'Explain the concept of middleware in web frameworks.', 'What is the difference between server-side and client-side rendering?'],
+        general: ['Tell me about yourself and your background.', 'What are your greatest strengths and weaknesses?', 'Why do you want to work at our company?', 'Describe a challenging project you worked on.', 'Where do you see yourself in 5 years?']
+    };
+    return bank[role] || bank.general;
+}
+
+function showQuestion() {
+    document.getElementById('questionNumber').textContent = 'Q' + (currentQuestion + 1);
+    document.getElementById('questionText').textContent = questions[currentQuestion];
+    document.getElementById('questionProgress').textContent = `Question ${currentQuestion + 1}/${totalQuestions}`;
+    document.getElementById('answerInput').value = '';
+    document.getElementById('charCount').textContent = '0 characters';
+    document.getElementById('feedbackCard').style.display = 'none';
+    document.getElementById('questionCard').style.display = 'block';
+}
+
+function submitAnswer() {
+    const answer = answerInput.value.trim();
+    if (!answer) return;
+
+    userAnswers.push(answer);
+    const analysis = analyzeAnswer(answer, questions[currentQuestion], selectedRole);
+    scores.push(analysis.score);
+
+    document.getElementById('feedbackScore').textContent = analysis.score + '/10';
+    document.getElementById('feedbackContent').innerHTML = analysis.feedback;
+    document.getElementById('questionCard').style.display = 'none';
+    document.getElementById('feedbackCard').style.display = 'block';
+}
+
+function analyzeAnswer(answer, question, role) {
+    const wordCount = answer.split(/\s+/).length;
+    const hasExamples = /for example|such as|like|instance/i.test(answer);
+    const hasTechnical = /function|class|method|variable|object|array|api|database|framework/i.test(answer);
+    const hasStructure = /first|second|then|finally|because|therefore|however/i.test(answer);
+    const hasNumbers = /\d+%|\d+ percent|\d+x|\d+ times/i.test(answer);
+
+    let score = 3;
+    if (wordCount > 20) score += 1;
+    if (wordCount > 50) score += 1;
+    if (wordCount > 100) score += 1;
+    if (hasExamples) score += 1;
+    if (hasTechnical) score += 1;
+    if (hasStructure) score += 1;
+    if (hasNumbers) score += 1;
+    score = Math.min(score, 10);
+
+    let feedback = `<p><strong>Answer Analysis:</strong></p>`;
+    feedback += `<p>Your answer contains <strong>${wordCount} words</strong>.</p>`;
+
+    if (wordCount < 20) {
+        feedback += `<p>Your answer is quite brief. Try to elaborate more with specific examples and technical details.</p>`;
+    } else if (wordCount < 50) {
+        feedback += `<p>Good length! Consider adding more specific examples to strengthen your answer.</p>`;
+    } else {
+        feedback += `<p>Excellent detail! Your answer demonstrates depth of knowledge.</p>`;
+    }
+
+    if (hasExamples) feedback += `<p>Great use of examples! This makes your answer more concrete.</p>`;
+    else feedback += `<p>Tip: Add specific examples to make your answer more compelling.</p>`;
+
+    if (hasTechnical) feedback += `<p>Good use of technical terminology relevant to the role.</p>`;
+    else feedback += `<p>Tip: Include more technical terms related to ${role.replace('_', ' ')}.</p>`;
+
+    if (hasStructure) feedback += `<p>Well-structured answer with clear logical flow.</p>`;
+    else feedback += `<p>Tip: Structure your answer using frameworks like STAR (Situation, Task, Action, Result).</p>`;
+
+    if (hasNumbers) feedback += `<p>Excellent! Quantifying achievements makes your answer more impactful.</p>`;
+
+    return { score, feedback };
+}
+
+function nextQuestion() {
+    currentQuestion++;
+    if (currentQuestion >= totalQuestions) showSummary();
+    else showQuestion();
+}
+
+function showSummary() {
+    interviewSession.style.display = 'none';
+    interviewSummary.style.display = 'block';
+    const avg = scores.reduce((a, b) => a + b, 0) / scores.length;
+    document.getElementById('summaryScore').textContent = avg.toFixed(1);
+    document.getElementById('totalQuestions').textContent = totalQuestions;
+    document.getElementById('highestScore').textContent = Math.max(...scores) + '/10';
+    document.getElementById('lowestScore').textContent = Math.min(...scores) + '/10';
+
+    // Save to localStorage for dashboard
+    const existing = JSON.parse(localStorage.getItem('interviewData') || '[]');
+    existing.push({
+        role: document.getElementById('currentRole').textContent,
+        score: avg.toFixed(1),
+        date: new Date().toLocaleDateString(),
+        totalQuestions: totalQuestions
+    });
+    localStorage.setItem('interviewData', JSON.stringify(existing));
+}
+
+function endInterview() {
+    if (currentQuestion > 0) showSummary();
+    else { interviewSession.style.display = 'none'; interviewSetup.style.display = 'block'; }
+}
+</script>
+{% endblock %}
