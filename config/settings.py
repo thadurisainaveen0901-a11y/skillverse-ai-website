@@ -6,15 +6,36 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = config("DJANGO_SECRET_KEY", default="django-insecure-skillverse-ai-premium-3d-2024")
 DEBUG = config("DJANGO_DEBUG", default=True, cast=bool)
-ALLOWED_HOSTS = [h.strip() for h in config("DJANGO_ALLOWED_HOSTS", default="*").split(",") if h.strip()]
-CSRF_TRUSTED_ORIGINS = [
-    origin.strip()
-    for origin in config(
-        "CSRF_TRUSTED_ORIGINS",
-        default="https://*.up.railway.app,https://*.railway.app,http://localhost:8000,http://127.0.0.1:8000",
-    ).split(",")
-    if origin.strip()
-]
+raw_allowed_hosts = config("DJANGO_ALLOWED_HOSTS", default="*")
+if "*" in raw_allowed_hosts:
+    ALLOWED_HOSTS = ["*"]
+else:
+    ALLOWED_HOSTS = [h.strip() for h in raw_allowed_hosts.split(",") if h.strip()]
+
+for host in [".onrender.com", ".up.railway.app", "localhost", "127.0.0.1"]:
+    if host not in ALLOWED_HOSTS and "*" not in ALLOWED_HOSTS:
+        ALLOWED_HOSTS.append(host)
+
+render_host = os.environ.get("RENDER_EXTERNAL_HOSTNAME")
+if render_host and render_host not in ALLOWED_HOSTS and "*" not in ALLOWED_HOSTS:
+    ALLOWED_HOSTS.append(render_host)
+
+raw_csrf = config(
+    "CSRF_TRUSTED_ORIGINS",
+    default="https://*.onrender.com,https://*.up.railway.app,https://*.railway.app,http://localhost:8000,http://127.0.0.1:8000",
+)
+CSRF_TRUSTED_ORIGINS = [origin.strip() for origin in raw_csrf.split(",") if origin.strip()]
+for default_origin in ["https://*.onrender.com", "https://*.up.railway.app"]:
+    if default_origin not in CSRF_TRUSTED_ORIGINS:
+        CSRF_TRUSTED_ORIGINS.append(default_origin)
+
+if render_host:
+    render_origin = f"https://{render_host}"
+    if render_origin not in CSRF_TRUSTED_ORIGINS:
+        CSRF_TRUSTED_ORIGINS.append(render_origin)
+
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+USE_X_FORWARDED_HOST = True
 
 INSTALLED_APPS = [
     "django.contrib.admin",
